@@ -195,11 +195,11 @@ func PostSolicitaAbonoBody() map[string]interface{} {
 				"CPF":                 cpf,
 				"Matricula":           "000031",
 				"Nome":                "Sandra Simone Cecília Martins",
-				"DataAbono":           "2024-06-12",
+				"DataAbono":           time.Now().Format("2006-01-02"),
 				"MotivoId":            "00101",
 				"StatusSol":           "1",
 				"DataSolicitacao":     time.Now().Format("2006-01-02"),
-				"DataSolicitacaoTz":   "GMT-0300",
+				"DataSolicitacaoTz":   "GMT-0000",
 				"DataSolicitacaoTzId": "America/Fortaleza",
 				"Turnos":              []string{"1", "2", "3", "4"},
 			},
@@ -219,5 +219,23 @@ func PutMensagemLidaAppRequestBody(mensagemID string) map[string]interface{} {
 	return map[string]interface{}{
 		"NrInscEmpregador": nrInsc,
 		"mensagemId":       mensagemID,
+	}
+}
+
+func PostAprovaAbonoBody() map[string]interface{} {
+	return map[string]interface{}{
+		"Abonos": []map[string]interface{}{
+			{
+				"NrInscEmpregador": "10821992",
+				"Evento":           "3",
+				"CPF":              "60515860409",
+				"Matricula":        "000031",
+				"Nome":             "Sandra Simone Cecília Martins",
+				"DataAbono":        time.Now().Format("2006-01-02"),
+				"MotivoId":         "00101",
+				"StatusSol":        "2",
+				"Turnos":           []string{"1", "2", "3", "4"},
+			},
+		},
 	}
 }

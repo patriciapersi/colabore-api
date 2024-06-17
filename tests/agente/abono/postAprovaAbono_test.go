@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestPostSolicitaAbono(t *testing.T) {
+func TestPostAprovaAbono(t *testing.T) {
 
 	testCases := []struct {
 		description  string
@@ -18,14 +18,14 @@ func TestPostSolicitaAbono(t *testing.T) {
 		expectedDesc string
 	}{
 		{
-			description:  "Envia Solicitação de Abono com Sucesso",
+			description:  "Aprova Solicitação de Abono com Sucesso",
 			header:       config.SetupHeadersAgente(),
 			setupBody:    true,
 			expected:     http.StatusOK,
 			expectedDesc: "Sucesso",
 		},
 		{
-			description:  "Tentativa de Encio de solicitação de abono sem body",
+			description:  "Tentativa de Aprovar de solicitação de abono sem body",
 			header:       config.SetupHeadersAgente(),
 			setupBody:    false,
 			expected:     http.StatusBadRequest,
@@ -47,7 +47,7 @@ func TestPostSolicitaAbono(t *testing.T) {
 			// Configura os parâmetros do corpo da requisição se necessário
 			var body interface{}
 			if tc.setupBody {
-				body = config.PostSolicitaAbonoBody()
+				body = config.PostAprovaAbonoBody()
 			}
 
 			resp, err := api.Client.R().

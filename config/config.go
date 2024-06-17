@@ -46,53 +46,53 @@ func SetupApi() *API {
 		SetBaseURL("https://fortescolabore2.fortestecnologia.com.br/homolog-next")
 
 	endpointsAgente := map[string]string{
-		"AbonoAprovaReprova":                       "/api/agente/Abono",
-		"SolicitaAbono":                            "/api/agente/Abono/Abono",
-		"ImagemReferencia":                         "/api/agente/Arquivo/ImagemReferencia",             //NAO SERÁ AUTOMATIZADO
-		"ArquivoRelatorioPontoURLTemporaria":       "/api/agente/Arquivo/RelatorioPonto/URLTemporaria", //NAO SERÁ AUTOMATIZADO
-		"AssinaturaLiberar":                        "/api/agente/Assinatura/Liberar",
-		"Assinatura":                               "/api/agente/Assinatura",
-		"AssinaturaContestacao":                    "/api/agente/Assinatura/Contestacao",
-		"AssinaturaContestacaoStatus":              "/api/agente/Assinatura/Contestacao/Status",
-		"AssinaturaRelatorioPonto":                 "/api/agente/Assinatura/RelatorioPonto",
-		"AssinaturaDigital":                        "/api/agente/AssinaturaDigital",          //NAO SERÁ AUTOMATIZADO
-		"AssinaturaDigitalFormData":                "/api/agente/AssinaturaDigital/FormData", //NAO SERÁ AUTOMATIZADO
-		"Candidato":                                "/api/agente/Candidato",
-		"CandidatoRetificar":                       "/api/agente/Candidato/Retificar",
-		"Acesso":                                   "/api/agente-acesso", //NAO SERÁ AUTOMATIZADO
-		"Agente":                                   "/api/agente",        //NAO SERÁ AUTOMATIZADO
-		"Colaborador":                              "/api/agente/Colaborador",
-		"ColaboradorAtivacao":                      "/api/agente/Colaborador/Ativacao",
-		"ColaboradorFreemium":                      "/api/agente/Colaborador/Freemium",
-		"ColaboradorPreemium":                      "/api/agente/Colaborador/Premium",
-		"ColaboradorEnderecoConfirmacao":           "/api/agente/Colaborador/Endereco/Confirmacao",
-		"ColaboradorEnderecos":                     "/api/agente/Colaborador/Enderecos",
-		"ColaboradorDefinicoes":                    "/api/agente/Colaborador/Definicoes",
-		"Declaracao":                               "/api/agente/Declaracao",
-		"Dispositivos":                             "/api/agente/Dispositivos",
-		"DispositivosStatus":                       "/api/agente/Dispositivos/Status",
-		"FeriasInformacoes":                        "/api/agente/Ferias/Informacoes",
-		"Ferias":                                   "/api/agente/Ferias",
-		"FolhaDePagamento":                         "/api/agente/FolhaDePagamento",
-		"Gestor":                                   "/api/agente/Gestor",
-		"GestorRH":                                 "/api/agente/Gestor/RH",
-		"GETimagem":                                "/api/agente/Imagem", //NAO SERÁ AUTOMATIZADO
-		"LicencaReconhecimentoFacial":              "/api/agente/Licenca/ReconhecimentoFacial",
+		"Abono":                              "/api/agente/Abono",
+		"ReverterAbono":                      "/api/agente/Abono/Redefinicao",
+		"ImagemReferencia":                   "/api/agente/Arquivo/ImagemReferencia",             //NAO SERÁ AUTOMATIZADO
+		"ArquivoRelatorioPontoURLTemporaria": "/api/agente/Arquivo/RelatorioPonto/URLTemporaria", //NAO SERÁ AUTOMATIZADO
+		"AssinaturaLiberar":                  "/api/agente/Assinatura/Liberar",
+		"Assinatura":                         "/api/agente/Assinatura",
+		"AssinaturaContestacao":              "/api/agente/Assinatura/Contestacao",
+		"AssinaturaContestacaoStatus":        "/api/agente/Assinatura/Contestacao/Status",
+		"AssinaturaRelatorioPonto":           "/api/agente/Assinatura/RelatorioPonto",
+		"AssinaturaDigital":                  "/api/agente/AssinaturaDigital",          //NAO SERÁ AUTOMATIZADO
+		"AssinaturaDigitalFormData":          "/api/agente/AssinaturaDigital/FormData", //NAO SERÁ AUTOMATIZADO
+		"Candidato":                          "/api/agente/Candidato",
+		"CandidatoRetificar":                 "/api/agente/Candidato/Retificar",
+		"Acesso":                             "/api/agente-acesso", //NAO SERÁ AUTOMATIZADO
+		"Agente":                             "/api/agente",        //NAO SERÁ AUTOMATIZADO
+		"Colaborador":                        "/api/agente/Colaborador",
+		"ColaboradorAtivacao":                "/api/agente/Colaborador/Ativacao",
+		"ColaboradorFreemium":                "/api/agente/Colaborador/Freemium",
+		"ColaboradorPreemium":                "/api/agente/Colaborador/Premium",
+		"ColaboradorEnderecoConfirmacao":     "/api/agente/Colaborador/Endereco/Confirmacao",
+		"ColaboradorEnderecos":               "/api/agente/Colaborador/Enderecos",
+		"ColaboradorDefinicoes":              "/api/agente/Colaborador/Definicoes",
+		"Declaracao":                         "/api/agente/Declaracao",
+		"Dispositivos":                       "/api/agente/Dispositivos",
+		"DispositivosStatus":                 "/api/agente/Dispositivos/Status",
+		"FeriasInformacoes":                  "/api/agente/Ferias/Informacoes",
+		"Ferias":                             "/api/agente/Ferias",
+		"FolhaDePagamento":                   "/api/agente/FolhaDePagamento",
+		"Gestor":                             "/api/agente/Gestor",
+		"GestorRH":                           "/api/agente/Gestor/RH",
+		"GETimagem":                          "/api/agente/Imagem", //NAO SERÁ AUTOMATIZADO
+		"LicencaReconhecimentoFacial":        "/api/agente/Licenca/ReconhecimentoFacial",
 		"LicenciadoEmailParaNotificacoesDaEmpresa": "/api/agente/Licenciado/EmailParaNotificacoesDaEmpresa", //NAO SERÁ AUTOMATIZADO
-		"LicenciadoLogo":                           "/api/agente/Licenciado/Logo",                           //NAO SERÁ AUTOMATIZADO
-		"LicenciadoDefinicoes":                     "/api/agente/Licenciado/Definicoes",
-		"Mensagem":                                 "/api/agente/Mensagem",
-		"Numerador":                                "/api/agente/Numerador", //NAO SERÁ AUTOMATIZADO
-		"Pesquisa":                                 "/api/agente/Pesquisa",
-		"PesquisaRespostas":                        "/api/agente/Pesquisa/Respostas",
-		"PesquisaRespostasPorPagina":               "/api/agente/Pesquisa/RespostasPorPagina",
-		"PesquisaResposta":                         "/api/agente/Pesquisa/Resposta",
-		"PontoBatidas":                             "/api/agente/Ponto/Batidas",
-		"PontoProcessamentoRedefinicao":            "/api/agente/Ponto/Processamento/Redefinicao",
-		"PontoAssinaturaRetroativaSolicitacao":     "/api/agente/Ponto/AssinaturaRetroativa/Solicitacao", //NAO SERÁ AUTOMATIZADO
-		"PontoObterTimeZone":                       "/api/agente/Ponto/ObterTimeZone",
-		"Termo":                                    "/api/agente/Termo", //NAO SERÁ AUTOMATIZADO
-		"VersaoApp":                                "/api/agente/VersaoApp",
+		"LicenciadoLogo":                       "/api/agente/Licenciado/Logo", //NAO SERÁ AUTOMATIZADO
+		"LicenciadoDefinicoes":                 "/api/agente/Licenciado/Definicoes",
+		"Mensagem":                             "/api/agente/Mensagem",
+		"Numerador":                            "/api/agente/Numerador", //NAO SERÁ AUTOMATIZADO
+		"Pesquisa":                             "/api/agente/Pesquisa",
+		"PesquisaRespostas":                    "/api/agente/Pesquisa/Respostas",
+		"PesquisaRespostasPorPagina":           "/api/agente/Pesquisa/RespostasPorPagina",
+		"PesquisaResposta":                     "/api/agente/Pesquisa/Resposta",
+		"PontoBatidas":                         "/api/agente/Ponto/Batidas",
+		"PontoProcessamentoRedefinicao":        "/api/agente/Ponto/Processamento/Redefinicao",
+		"PontoAssinaturaRetroativaSolicitacao": "/api/agente/Ponto/AssinaturaRetroativa/Solicitacao", //NAO SERÁ AUTOMATIZADO
+		"PontoObterTimeZone":                   "/api/agente/Ponto/ObterTimeZone",
+		"Termo":                                "/api/agente/Termo", //NAO SERÁ AUTOMATIZADO
+		"VersaoApp":                            "/api/agente/VersaoApp",
 	}
 
 	endpointsApp := map[string]string{
