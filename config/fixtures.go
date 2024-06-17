@@ -106,13 +106,6 @@ func PostSolicitaFeriasAPPRequestBody() map[string]interface{} {
 	}
 }
 
-func DeleteImagemReferencia() map[string]interface{} {
-	return map[string]interface{}{
-		"CPF":              "12658729375",
-		"NrInscEmpregador": nrInsc,
-	}
-}
-
 func PostAssinaturaRequestBody() map[string]interface{} {
 	return map[string]interface{}{
 		"NrInscEmpregador": nrInsc,
