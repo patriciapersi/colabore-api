@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 	"testing"
 
@@ -56,7 +55,6 @@ func TestGetAbonoHistorico(t *testing.T) {
 				Get(api.EndpointsApp["AbonoHistorico"])
 
 			assert.NoError(t, err, "Erro ao fazer a requisição")
-			fmt.Println(resp.StatusCode())
 			assert.Equal(t, tc.expected, resp.StatusCode(), "Status de resposta inesperado")
 			assert.Contains(t, string(resp.Body()), tc.expectedDesc, "Descrição de resposta inesperada")
 		})

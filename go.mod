@@ -4,6 +4,7 @@ go 1.22.3
 
 require (
 	github.com/aws/aws-sdk-go v1.54.3
+	github.com/bxcodec/faker/v3 v3.8.1
 	github.com/go-resty/resty/v2 v2.13.1
 	github.com/google/uuid v1.6.0
 	github.com/joho/godotenv v1.5.1

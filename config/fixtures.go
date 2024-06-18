@@ -3,6 +3,7 @@ package config
 import (
 	"time"
 
+	"github.com/bxcodec/faker/v3"
 	"github.com/google/uuid"
 )
 
@@ -240,39 +241,42 @@ func PostAprovaAbonoBody() map[string]interface{} {
 	}
 }
 
+func DeletePesquisaBody(pesquisaId string) map[string]interface{} {
+	return map[string]interface{}{
+		"pesquisas": []map[string]interface{}{
+			{
+				"Matricula":        "000031",
+				"CPF":              "60515860409",
+				"NrInscEmpregador": nrInsc,
+				"PesquisaId":       pesquisaId,
+			},
+		},
+	}
+}
+
 func PostPesquisaRequestBody() map[string]interface{} {
 	perguntaId := uuid.New().String()
+
 	return map[string]interface{}{
 		"id":                 uuid.New().String(),
-		"inicio":             "string",
-		"fim":                "string",
+		"inicio":             time.Now().Format("02/01/2006"),
+		"fim":                time.Now().Format("02/01/2006"),
 		"NrInscEmpregador":   nrInsc,
-		"titulo":             "string",
+		"titulo":             faker.Word(),
 		"monitoramentoSaude": false,
 		"pesquisaAnonima":    true,
-		"informativo":        "string",
 		"independeMatricula": true,
-		"Versao":             "string",
+		"Versao":             uuid.New().String(),
 		"perguntas": []map[string]interface{}{
 			{
-				"id":              perguntaId,
-				"tipo":            "string",
-				"ordem":           "string",
-				"texto":           "string",
-				"textoComentario": "string",
-				"obrigatoria":     true,
-				"aspecto":         "string",
-				"notaMinima":      0,
-				"notaMaxima":      0,
-				"respostas": []map[string]interface{}{
-					{
-						"id":              uuid.New().String(),
-						"perguntaId":      perguntaId,
-						"texto":           "string",
-						"ordem":           "string",
-						"notificarGestor": true,
-					},
-				},
+				"id":          perguntaId,
+				"tipo":        "SUBJETIVA",
+				"ordem":       "1",
+				"texto":       faker.Word(),
+				"obrigatoria": true,
+				"notaMinima":  0,
+				"notaMaxima":  0,
+				"respostas":   []map[string]interface{}{},
 			},
 		},
 		"colaboradores": []map[string]interface{}{
