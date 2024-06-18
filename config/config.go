@@ -96,11 +96,20 @@ func SetupApi() *API {
 	}
 
 	endpointsApp := map[string]string{
-		"Appferias":      "/api/app/Ferias",
-		"AbonoHistorico": "/api/app/Abono/Historico",
-		"Folha":          "/api/app/FolhaDePagamento",
-		"Mensagem":       "/api/app/Mensagem",
-		"MensagemLida":   "/api/app/Mensagem/Ler",
+		"Appferias":              "/api/app/Ferias",
+		"AbonoHistorico":         "/api/app/Abono/Historico",
+		"Folha":                  "/api/app/FolhaDePagamento",
+		"Mensagem":               "/api/app/Mensagem",
+		"MensagemLida":           "/api/app/Mensagem/Ler",
+		"PontoBatidas":           "/api/app/Ponto/Batidas",
+		"PontoContemBatidas":     "/api/app/Ponto/ContemBatidas",
+		"PontoLeituraBatidas":    "/api/app/Ponto/LeituraBatidas",       //ENDPOINT NAO UTILIZADO
+		"ReconhecimentoFacial":   "/api/app/Ponto/ReconhecimentoFacial", //NAO SERÁ AUTOMATIZADO
+		"Termo":                  "/api/app/Termo/Aceite",               //NAO SERÁ AUTOMATIZADO
+		"Timezone":               "/api/app/Time/Timestamp",             //NAO SERÁ AUTOMATIZADO
+		"InstalacaoApp":          "/api/app/InstalacaoApp",              //NAO SERÁ AUTOMATIZADO
+		"InformaçaoDoAplicativo": "/api/app/InformacoesDoAplicativo",    //NAO SERÁ AUTOMATIZADO
+		"Imagem":                 "/api/app/Imagem",                     //NAO SERÁ AUTOMATIZADO
 	}
 
 	return &API{
@@ -149,6 +158,6 @@ func ReturnTokenId() (string, error) {
 
 	// Obtendo tokens do resultado
 	idToken := aws.StringValue(authOutput.AuthenticationResult.IdToken)
-
+	fmt.Println(idToken)
 	return idToken, nil
 }
