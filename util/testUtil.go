@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"time"
 
 	"github.com/joho/godotenv"
 )
@@ -39,4 +40,17 @@ func LoadEnv() error {
 		}
 		cwd = parentDir
 	}
+}
+
+func GetFirstDayOfMonth() string {
+	// Obter a data atual
+	now := time.Now()
+
+	// Construir a data do primeiro dia do mês atual
+	firstOfMonth := time.Date(now.Year(), now.Month(), 1, 0, 0, 0, 0, now.Location())
+
+	// Formatando a data no formato desejado (DD/MM/YYYY)
+	formattedDate := firstOfMonth.Format("02/01/2006")
+
+	return formattedDate
 }
