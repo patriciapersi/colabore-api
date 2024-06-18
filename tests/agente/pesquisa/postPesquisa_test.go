@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"testing"
@@ -15,16 +14,17 @@ func TestPostPesquisa(t *testing.T) {
 	testsCases := []struct {
 		description      string
 		NrInscEmpregador string
+		body             bool
 		header           map[string]string
 		expected         int
 		expectedDesc     string
 	}{
 		{
-			description:      "Inserir Pesquisas com sucesso",
-			NrInscEmpregador: "10821992",
-			header:           config.SetupHeadersApp(),
-			expected:         http.StatusOK,
-			expectedDesc:     "Sucesso",
+			description:  "Inserir Pesquisas com sucesso",
+			body:         true,
+			header:       config.SetupHeadersAgente(),
+			expected:     http.StatusOK,
+			expectedDesc: "Sucesso",
 		},
 	}
 
@@ -32,11 +32,11 @@ func TestPostPesquisa(t *testing.T) {
 		t.Run(tc.description, func(t *testing.T) {
 
 			api := config.SetupApi()
+
 			requestBody := config.PostPesquisaRequestBody()
 			id := requestBody["id"].(string)
-			fmt.Println(id)
 			resp, _ := api.Client.R().
-				SetHeaders(config.SetupHeadersAgente()).
+				SetHeaders(tc.header).
 				SetBody(requestBody).
 				Post(api.EndpointsAgente["Pesquisa"])
 
