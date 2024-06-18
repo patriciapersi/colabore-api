@@ -239,3 +239,48 @@ func PostAprovaAbonoBody() map[string]interface{} {
 		},
 	}
 }
+
+func PostPesquisaRequestBody() map[string]interface{} {
+	perguntaId := uuid.New().String()
+	return map[string]interface{}{
+		"id":                 uuid.New().String(),
+		"inicio":             "string",
+		"fim":                "string",
+		"NrInscEmpregador":   nrInsc,
+		"titulo":             "string",
+		"monitoramentoSaude": false,
+		"pesquisaAnonima":    true,
+		"informativo":        "string",
+		"independeMatricula": true,
+		"Versao":             "string",
+		"perguntas": []map[string]interface{}{
+			{
+				"id":              perguntaId,
+				"tipo":            "string",
+				"ordem":           "string",
+				"texto":           "string",
+				"textoComentario": "string",
+				"obrigatoria":     true,
+				"aspecto":         "string",
+				"notaMinima":      0,
+				"notaMaxima":      0,
+				"respostas": []map[string]interface{}{
+					{
+						"id":              uuid.New().String(),
+						"perguntaId":      perguntaId,
+						"texto":           "string",
+						"ordem":           "string",
+						"notificarGestor": true,
+					},
+				},
+			},
+		},
+		"colaboradores": []map[string]interface{}{
+			{
+				"Matricula":        "000031",
+				"CPF":              cpf,
+				"NrInscEmpregador": nrInsc,
+			},
+		},
+	}
+}

@@ -110,6 +110,7 @@ func SetupApi() *API {
 		"InstalacaoApp":          "/api/app/InstalacaoApp",              //NAO SERÁ AUTOMATIZADO
 		"InformaçaoDoAplicativo": "/api/app/InformacoesDoAplicativo",    //NAO SERÁ AUTOMATIZADO
 		"Imagem":                 "/api/app/Imagem",                     //NAO SERÁ AUTOMATIZADO
+		"PesquisaLista":          "/api/app/Pesquisa/Lista",
 	}
 
 	return &API{
