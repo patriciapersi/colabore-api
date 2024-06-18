@@ -3,6 +3,7 @@ package config
 import (
 	"time"
 
+	"github.com/bxcodec/faker/v3"
 	"github.com/google/uuid"
 )
 
@@ -235,6 +236,54 @@ func PostAprovaAbonoBody() map[string]interface{} {
 				"MotivoId":         "00101",
 				"StatusSol":        "2",
 				"Turnos":           []string{"1", "2", "3", "4"},
+			},
+		},
+	}
+}
+
+func DeletePesquisaBody(pesquisaId string) map[string]interface{} {
+	return map[string]interface{}{
+		"pesquisas": []map[string]interface{}{
+			{
+				"Matricula":        "000031",
+				"CPF":              "60515860409",
+				"NrInscEmpregador": nrInsc,
+				"PesquisaId":       pesquisaId,
+			},
+		},
+	}
+}
+
+func PostPesquisaRequestBody() map[string]interface{} {
+	perguntaId := uuid.New().String()
+
+	return map[string]interface{}{
+		"id":                 uuid.New().String(),
+		"inicio":             time.Now().Format("02/01/2006"),
+		"fim":                time.Now().Format("02/01/2006"),
+		"NrInscEmpregador":   nrInsc,
+		"titulo":             faker.Word(),
+		"monitoramentoSaude": false,
+		"pesquisaAnonima":    true,
+		"independeMatricula": true,
+		"Versao":             uuid.New().String(),
+		"perguntas": []map[string]interface{}{
+			{
+				"id":          perguntaId,
+				"tipo":        "SUBJETIVA",
+				"ordem":       "1",
+				"texto":       faker.Word(),
+				"obrigatoria": true,
+				"notaMinima":  0,
+				"notaMaxima":  0,
+				"respostas":   []map[string]interface{}{},
+			},
+		},
+		"colaboradores": []map[string]interface{}{
+			{
+				"Matricula":        "000031",
+				"CPF":              cpf,
+				"NrInscEmpregador": nrInsc,
 			},
 		},
 	}

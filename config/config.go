@@ -50,13 +50,13 @@ func SetupApi() *API {
 		"ReverterAbono":                      "/api/agente/Abono/Redefinicao",
 		"ImagemReferencia":                   "/api/agente/Arquivo/ImagemReferencia",             //NAO SERÁ AUTOMATIZADO
 		"ArquivoRelatorioPontoURLTemporaria": "/api/agente/Arquivo/RelatorioPonto/URLTemporaria", //NAO SERÁ AUTOMATIZADO
-		"AssinaturaLiberar":                  "/api/agente/Assinatura/Liberar",
-		"Assinatura":                         "/api/agente/Assinatura",
-		"AssinaturaContestacao":              "/api/agente/Assinatura/Contestacao",
-		"AssinaturaContestacaoStatus":        "/api/agente/Assinatura/Contestacao/Status",
-		"AssinaturaRelatorioPonto":           "/api/agente/Assinatura/RelatorioPonto",
-		"AssinaturaDigital":                  "/api/agente/AssinaturaDigital",          //NAO SERÁ AUTOMATIZADO
-		"AssinaturaDigitalFormData":          "/api/agente/AssinaturaDigital/FormData", //NAO SERÁ AUTOMATIZADO
+		"AssinaturaLiberar":                  "/api/agente/Assinatura/Liberar",                   //NAO SERÁ AUTOMATIZA
+		"Assinatura":                         "/api/agente/Assinatura",                           //NAO SERÁ AUTOMATIZA
+		"AssinaturaContestacao":              "/api/agente/Assinatura/Contestacao",               //NAO SERÁ AUTOMATIZA
+		"AssinaturaContestacaoStatus":        "/api/agente/Assinatura/Contestacao/Status",        //NAO SERÁ AUTOMATIZA
+		"AssinaturaRelatorioPonto":           "/api/agente/Assinatura/RelatorioPonto",            //NAO SERÁ AUTOMATIZA
+		"AssinaturaDigital":                  "/api/agente/AssinaturaDigital",                    //NAO SERÁ AUTOMATIZADO
+		"AssinaturaDigitalFormData":          "/api/agente/AssinaturaDigital/FormData",           //NAO SERÁ AUTOMATIZADO
 		"Candidato":                          "/api/agente/Candidato",
 		"CandidatoRetificar":                 "/api/agente/Candidato/Retificar",
 		"Acesso":                             "/api/agente-acesso", //NAO SERÁ AUTOMATIZADO
@@ -110,6 +110,7 @@ func SetupApi() *API {
 		"InstalacaoApp":          "/api/app/InstalacaoApp",              //NAO SERÁ AUTOMATIZADO
 		"InformaçaoDoAplicativo": "/api/app/InformacoesDoAplicativo",    //NAO SERÁ AUTOMATIZADO
 		"Imagem":                 "/api/app/Imagem",                     //NAO SERÁ AUTOMATIZADO
+		"PesquisaLista":          "/api/app/Pesquisa/Lista",
 	}
 
 	return &API{
