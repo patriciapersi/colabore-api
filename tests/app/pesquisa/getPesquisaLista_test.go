@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
 	"testing"
@@ -49,9 +48,6 @@ func TestGetPesquisaLista(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.description, func(t *testing.T) {
-
-			fmt.Println(tc.id)
-
 			api := config.SetupApi()
 			queryParams := map[string]string{
 				"NrInscEmpregador": tc.NrInscEmpregador,
