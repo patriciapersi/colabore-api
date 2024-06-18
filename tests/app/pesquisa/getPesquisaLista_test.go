@@ -30,21 +30,21 @@ func TestGetPesquisaLista(t *testing.T) {
 			expected:         http.StatusOK,
 			expectedDesc:     "Sucesso", //valida
 		},
-		// {
-		// 	description:      "Buscar Lista de Pesquisas com nrInsc Vazio",
-		// 	id:               "",
-		// 	NrInscEmpregador: "",
-		// 	header:           config.SetupHeadersApp(),
-		// 	expected:         http.StatusBadRequest,
-		// 	expectedDesc:     "Parâmetro nrInscEmpregador obrigatório.",
-		// },
-		// {
-		// 	description:      "Buscar Lista de Pesquisas com header Vazio",
-		// 	NrInscEmpregador: "",
-		// 	header:           map[string]string{},
-		// 	expected:         http.StatusUnauthorized,
-		// 	expectedDesc:     "Unauthorized",
-		// },
+		{
+			description:      "Buscar Lista de Pesquisas com nrInsc Vazio",
+			id:               "",
+			NrInscEmpregador: "",
+			header:           config.SetupHeadersApp(),
+			expected:         http.StatusBadRequest,
+			expectedDesc:     "Parâmetro nrInscEmpregador obrigatório.",
+		},
+		{
+			description:      "Buscar Lista de Pesquisas com header Vazio",
+			NrInscEmpregador: "",
+			header:           map[string]string{},
+			expected:         http.StatusUnauthorized,
+			expectedDesc:     "Unauthorized",
+		},
 	}
 
 	for _, tc := range testCases {
