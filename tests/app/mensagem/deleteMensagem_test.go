@@ -21,6 +21,7 @@ func getMessageID() string {
 
 	if resp.StatusCode() != http.StatusOK {
 		log.Printf("Unexpected status code: %d", resp.StatusCode())
+		panic("Falha na requisição")
 	}
 
 	return id
