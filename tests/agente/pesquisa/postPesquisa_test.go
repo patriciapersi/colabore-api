@@ -75,20 +75,3 @@ func TestPostPesquisa(t *testing.T) {
 		})
 	}
 }
-
-// func precondition() string {
-// 	api := config.SetupApi()
-// 	requestBody := config.PostPesquisaRequestBody()
-// 	id := requestBody["id"].(string)
-// 	resp, _ := api.Client.R().
-// 		SetHeaders(config.SetupHeadersAgente()).
-// 		SetBody(requestBody).
-// 		Post(api.EndpointsAgente["Pesquisa"])
-
-// 	if resp.StatusCode() != http.StatusOK {
-// 		log.Printf("Unexpected status code: %d", resp.StatusCode())
-// 		panic("Falha na requisição")
-// 	}
-
-// 	return id
-// }
