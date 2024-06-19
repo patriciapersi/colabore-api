@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"net/http"
 	"testing"
 
@@ -14,17 +13,31 @@ func TestPostPesquisa(t *testing.T) {
 	testsCases := []struct {
 		description      string
 		NrInscEmpregador string
-		body             bool
+		setupBody        bool
 		header           map[string]string
 		expected         int
 		expectedDesc     string
 	}{
 		{
 			description:  "Inserir Pesquisas com sucesso",
-			body:         true,
+			setupBody:    true,
 			header:       config.SetupHeadersAgente(),
 			expected:     http.StatusOK,
 			expectedDesc: "Sucesso",
+		},
+		{
+			description:  "Inserir Pesquisas com sucesso",
+			setupBody:    false,
+			header:       config.SetupHeadersAgente(),
+			expected:     http.StatusBadRequest,
+			expectedDesc: "Corpo da requisição não contém",
+		},
+		{
+			description:  "Inserir Pesquisas com sucesso",
+			setupBody:    false,
+			header:       map[string]string{},
+			expected:     http.StatusUnauthorized,
+			expectedDesc: "Unauthorized",
 		},
 	}
 
@@ -35,16 +48,18 @@ func TestPostPesquisa(t *testing.T) {
 
 			requestBody := config.PostPesquisaRequestBody()
 			id := requestBody["id"].(string)
-			resp, _ := api.Client.R().
+
+			var body interface{}
+			if tc.setupBody {
+				body = requestBody
+
+			}
+			resp, err := api.Client.R().
 				SetHeaders(tc.header).
-				SetBody(requestBody).
+				SetBody(body).
 				Post(api.EndpointsAgente["Pesquisa"])
 
-			if resp.StatusCode() != http.StatusOK {
-				log.Printf("Unexpected status code: %d", resp.StatusCode())
-				panic("Falha na requisição")
-			}
-
+			assert.NoError(t, err, "Erro ao fazer a requisição")
 			assert.Equal(t, tc.expected, resp.StatusCode(), "Status de resposta inesperado")
 			assert.Contains(t, string(resp.Body()), tc.expectedDesc, "Descrição de resposta inesperada")
 
