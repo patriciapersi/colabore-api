@@ -25,7 +25,7 @@ func TestPostSolicitaAbono(t *testing.T) {
 			expectedDesc: "Sucesso",
 		},
 		{
-			description:  "Tentativa de Encio de solicitação de abono sem body",
+			description:  "Tentativa de Envio de solicitação de abono sem body",
 			header:       config.SetupHeadersAgente(),
 			setupBody:    false,
 			expected:     http.StatusBadRequest,
