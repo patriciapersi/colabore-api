@@ -223,14 +223,14 @@ func PutMensagemLidaAppRequestBody(mensagemID string) map[string]interface{} {
 	}
 }
 
-func PostAprovaAbonoBody() map[string]interface{} {
+func PostAprovaAbonoBody(tax_id string, cnpj string, matricula string) map[string]interface{} {
 	return map[string]interface{}{
 		"Abonos": []map[string]interface{}{
 			{
-				"NrInscEmpregador": "10821992",
+				"NrInscEmpregador": cnpj,
 				"Evento":           "3",
-				"CPF":              "60515860409",
-				"Matricula":        "000031",
+				"CPF":              tax_id,
+				"Matricula":        matricula,
 				"Nome":             "Sandra Simone Cecília Martins",
 				"DataAbono":        time.Now().Format("2006-01-02"),
 				"MotivoId":         "00101",
@@ -284,6 +284,43 @@ func PostPesquisaRequestBody() map[string]interface{} {
 				"Matricula":        "000031",
 				"CPF":              cpf,
 				"NrInscEmpregador": nrInsc,
+			},
+		},
+	}
+}
+
+func PutReveterAbonoBody(tax_id string, cnpj string, matricula string) map[string]interface{} {
+	return map[string]interface{}{
+		"Abonos": []map[string]interface{}{
+			{
+				"NrInscEmpregador": cnpj,
+				"Evento":           "3",
+				"CPF":              tax_id,
+				"Matricula":        matricula,
+				"DataAbono":        time.Now().Format("2006-01-02"),
+				"MotivoId":         "00101",
+				"Turnos":           []string{"1", "2", "3", "4"},
+			},
+		},
+	}
+}
+
+func PostSolicitaAbono2Body(tax_id string, cnpj string, matricula string) map[string]interface{} {
+	return map[string]interface{}{
+		"Abonos": []map[string]interface{}{
+			{
+				"NrInscEmpregador":    cnpj,
+				"Evento":              "3",
+				"CPF":                 tax_id,
+				"Matricula":           matricula,
+				"Nome":                "Sandra Simone Cecília Martins",
+				"DataAbono":           time.Now().Format("2006-01-02"),
+				"MotivoId":            "00101",
+				"StatusSol":           "1",
+				"DataSolicitacao":     time.Now().Format("2006-01-02"),
+				"DataSolicitacaoTz":   "GMT-0000",
+				"DataSolicitacaoTzId": "America/Fortaleza",
+				"Turnos":              []string{"1", "2", "3", "4"},
 			},
 		},
 	}
