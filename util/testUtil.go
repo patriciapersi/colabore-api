@@ -2,6 +2,7 @@ package testUtil
 
 import (
 	"fmt"
+	"math/rand"
 	"os"
 	"path/filepath"
 	"time"
@@ -53,4 +54,40 @@ func GetFirstDayOfMonth() string {
 	formattedDate := firstOfMonth.Format("02/01/2006")
 
 	return formattedDate
+}
+
+func GenerateCPF() string {
+	var digits []int
+	for i := 0; i < 9; i++ {
+		digits = append(digits, rand.Intn(10))
+	}
+	sum := 0
+	for i := 0; i < 9; i++ {
+		sum += digits[i] * (10 - i)
+	}
+	remainder := sum % 11
+	var digit1 int
+	if remainder < 2 {
+		digit1 = 0
+	} else {
+		digit1 = 11 - remainder
+	}
+	digits = append(digits, digit1)
+
+	sum = 0
+	for i := 0; i < 10; i++ {
+		sum += digits[i] * (11 - i)
+	}
+	remainder = sum % 11
+	var digit2 int
+	if remainder < 2 {
+		digit2 = 0
+	} else {
+		digit2 = 11 - remainder
+	}
+	digits = append(digits, digit2)
+
+	cpf := fmt.Sprintf("%d%d%d%d%d%d%d%d%d%d%d", digits[0], digits[1], digits[2], digits[3], digits[4], digits[5], digits[6], digits[7], digits[8], digits[9], digits[10])
+
+	return cpf
 }
