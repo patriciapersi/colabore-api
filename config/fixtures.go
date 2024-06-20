@@ -325,3 +325,10 @@ func PostSolicitaAbono2Body(tax_id string, cnpj string, matricula string) map[st
 		},
 	}
 }
+
+func PostCandidatoBody(tax_id string, cnpj string) map[string]interface{} {
+	return map[string]interface{}{
+		"NrInscEmpregador": cnpj,
+		"CPF":              tax_id,
+	}
+}
