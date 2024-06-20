@@ -4,20 +4,11 @@ import (
 	"net/http"
 	"testing"
 
-	"fmt"
-
 	"github.com/patriciapersi/colabore-api/config"
 	"github.com/stretchr/testify/assert"
 
 	testutil "github.com/patriciapersi/colabore-api/util"
 )
-
-func main() {
-	cpf := testutil.GenerateCPF()
-
-	fmt.Println("CPF gerado:", cpf)
-
-}
 
 func TestPostCandidato(t *testing.T) {
 	var cpf = testutil.GenerateCPF()
