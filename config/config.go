@@ -111,6 +111,7 @@ func SetupApi() *API {
 		"InformaçaoDoAplicativo": "/api/app/InformacoesDoAplicativo",    //NAO SERÁ AUTOMATIZADO
 		"Imagem":                 "/api/app/Imagem",                     //NAO SERÁ AUTOMATIZADO
 		"PesquisaLista":          "/api/app/Pesquisa/Lista",
+		"ColaboradorProfile":     "/api/app/Colaborador/Profile",
 	}
 
 	return &API{
