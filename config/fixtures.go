@@ -223,14 +223,14 @@ func PutMensagemLidaAppRequestBody(mensagemID string) map[string]interface{} {
 	}
 }
 
-func PostAprovaAbonoBody() map[string]interface{} {
+func PostAprovaAbonoBody(tax_id string, cnpj string, matricula string) map[string]interface{} {
 	return map[string]interface{}{
 		"Abonos": []map[string]interface{}{
 			{
-				"NrInscEmpregador": "10821992",
+				"NrInscEmpregador": cnpj,
 				"Evento":           "3",
-				"CPF":              "60515860409",
-				"Matricula":        "000031",
+				"CPF":              tax_id,
+				"Matricula":        matricula,
 				"Nome":             "Sandra Simone Cecília Martins",
 				"DataAbono":        time.Now().Format("2006-01-02"),
 				"MotivoId":         "00101",
