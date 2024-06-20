@@ -20,7 +20,7 @@ func main() {
 }
 
 func TestPostCandidato(t *testing.T) {
-
+	var cpf = testutil.GenerateCPF()
 	testCases := []struct {
 		description  string
 		header       map[string]string
@@ -37,7 +37,7 @@ func TestPostCandidato(t *testing.T) {
 			expected:     http.StatusOK,
 			expectedDesc: "Sucesso",
 			nrInsc:       "10821992",
-			cpf:          testutil.GenerateCPF(),
+			cpf:          cpf,
 		},
 		{
 			description:  "Validar um candidato ja enviado",
@@ -46,7 +46,7 @@ func TestPostCandidato(t *testing.T) {
 			expected:     http.StatusBadRequest,
 			expectedDesc: "Candidato já foi enviado anteriormente",
 			nrInsc:       "10821992",
-			cpf:          "58874582919",
+			cpf:          cpf,
 		},
 		{
 			description:  "Tentativa de incluir novo candidato sem body",
