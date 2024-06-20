@@ -6,7 +6,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func MessageRequestBody(nrInsc, cpf string) Mensagem {
+func PostMessageRequestBody(nrInsc, cpf string) Mensagem {
 	return Mensagem{
 		ID:               uuid.New().String(),
 		TpInscEmpregador: CNPJ,
@@ -23,5 +23,13 @@ func MessageRequestBody(nrInsc, cpf string) Mensagem {
 				},
 			},
 		},
+	}
+}
+
+func DeleteMessageRequestBody(mensagemID, nrInsc, cpf string) DeleteMensagensRequest {
+	return DeleteMensagensRequest{
+		MensagemID:       mensagemID,
+		NrInscEmpregador: nrInsc,
+		ListaCPF:         []string{cpf},
 	}
 }

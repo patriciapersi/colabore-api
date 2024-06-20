@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 	"testing"
 
@@ -11,73 +10,82 @@ import (
 )
 
 func TestPostMensagens(t *testing.T) {
+	const (
+		nrInsc = "10821992"
+		cpf    = "60515860409"
+	)
 
-	// Definindo uma tabela de casos de teste
 	testCases := []struct {
 		description  string
-		setupBody    bool
-		header       map[string]string
+		setupHeaders map[string]string
+		requestBody  structs.Mensagem
 		expected     int
 		expectedDesc string
 	}{
 		{
-			description:  "Teste envio de mensagem",
-			setupBody:    true,
-			header:       config.SetupHeadersAgente(),
+			description:  "Teste envio de mensagem com sucesso",
+			setupHeaders: config.SetupHeadersAgente(),
+			requestBody:  structs.PostMessageRequestBody(nrInsc, cpf),
 			expected:     http.StatusOK,
 			expectedDesc: "Sucesso",
 		},
 		{
-			description:  "Teste envio de mensagem",
-			setupBody:    false,
-			header:       config.SetupHeadersAgente(),
+			description:  "Teste envio de mensagem Sem o nrInsc e sem CPF",
+			setupHeaders: config.SetupHeadersAgente(),
+			requestBody:  structs.PostMessageRequestBody("", ""),
 			expected:     http.StatusBadRequest,
-			expectedDesc: "Requisicao deveria conter chave 'Mensagem'",
+			expectedDesc: "Corpo da requisicao nao contem chaves: NrInscEmpregador",
 		},
 		{
-			description:  "Teste envio de mensagem sem header",
-			setupBody:    false,
-			header:       map[string]string{},
+			description:  "Teste envio de mensagem Sem o nrInsc",
+			setupHeaders: config.SetupHeadersAgente(),
+			requestBody:  structs.PostMessageRequestBody("", cpf),
+			expected:     http.StatusBadRequest,
+			expectedDesc: "Corpo da requisicao nao contem chaves: NrInscEmpregador",
+		},
+		{
+			description:  "Teste envio de mensagem sem o CPF",
+			setupHeaders: config.SetupHeadersAgente(),
+			requestBody:  structs.PostMessageRequestBody(nrInsc, ""),
+			expected:     http.StatusBadRequest,
+			expectedDesc: "Corpo da requisicao nao contem chaves: Colaboradores[0].CPF",
+		},
+		{
+			description:  "Teste envio de mensagem sem o header",
+			setupHeaders: map[string]string{},
+			requestBody:  structs.PostMessageRequestBody(nrInsc, cpf),
 			expected:     http.StatusUnauthorized,
 			expectedDesc: "Unauthorized",
 		},
 	}
 
-	// Iterando sobre os casos de teste
 	for _, tc := range testCases {
 		t.Run(tc.description, func(t *testing.T) {
 			api := config.SetupApi()
 
-			requestBody := structs.MessageRequestBody("10821992", "60515860409")
-			id := requestBody.ID
-			fmt.Println(id)
-
-			var body interface{}
-			if tc.setupBody {
-				body = requestBody
-
-			}
+			id := tc.requestBody.ID
 
 			resp, err := api.Client.R().
-				SetHeaders(tc.header).
-				SetBody(body).
+				SetHeaders(tc.setupHeaders).
+				SetBody(tc.requestBody).
 				Post(api.EndpointsAgente["Mensagem"])
 
 			assert.NoError(t, err, "Erro ao fazer a requisição")
 			assert.Equal(t, tc.expected, resp.StatusCode(), "Status de resposta inesperado")
 			assert.Contains(t, string(resp.Body()), tc.expectedDesc, "Descrição de resposta inesperada")
 
-			if tc.header != nil && tc.setupBody {
-				deleteDataAfterTest(id)
+			if tc.setupHeaders != nil {
+				deleteDataAfterTest(id, nrInsc, cpf)
 			}
+
 		})
 	}
 }
 
-func deleteDataAfterTest(id string) {
+func deleteDataAfterTest(id, nrInsc, cpf string) {
 	api := config.SetupApi()
 	api.Client.R().
 		SetHeaders(config.SetupHeadersAgente()).
-		SetBody(config.DeleteMensagensRequestBody(id)).
+		SetBody(structs.DeleteMessageRequestBody(id, nrInsc, cpf)).
 		Delete(api.EndpointsAgente["Mensagem"])
 }
