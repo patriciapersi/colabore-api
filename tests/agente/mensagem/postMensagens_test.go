@@ -1,10 +1,12 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"testing"
 
 	"github.com/patriciapersi/colabore-api/config"
+	"github.com/patriciapersi/colabore-api/config/structs"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -46,8 +48,9 @@ func TestPostMensagens(t *testing.T) {
 		t.Run(tc.description, func(t *testing.T) {
 			api := config.SetupApi()
 
-			requestBody := config.MensagensRequestBody()
-			id := requestBody["ID"].(string)
+			requestBody := structs.MessageRequestBody("10821992", "60515860409")
+			id := requestBody.ID
+			fmt.Println(id)
 
 			var body interface{}
 			if tc.setupBody {
