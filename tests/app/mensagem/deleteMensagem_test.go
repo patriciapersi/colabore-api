@@ -1,68 +1,70 @@
 package main
 
 import (
-	"log"
 	"net/http"
 	"testing"
 
 	"github.com/google/uuid"
 	"github.com/patriciapersi/colabore-api/config"
+	"github.com/patriciapersi/colabore-api/config/structs"
 	"github.com/stretchr/testify/assert"
 )
 
-func getMessageID() string {
-	api := config.SetupApi()
-	requestBody := config.MensagensRequestBody()
-	id := requestBody["ID"].(string)
-	resp, _ := api.Client.R().
-		SetHeaders(config.SetupHeadersAgente()).
-		SetBody(requestBody).
-		Post(api.EndpointsAgente["Mensagem"])
-
-	if resp.StatusCode() != http.StatusOK {
-		log.Printf("Unexpected status code: %d", resp.StatusCode())
-		panic("Falha na requisição")
-	}
-
-	return id
-}
+const (
+	nrInsc = "10821992"
+	cpf    = "60515860409"
+)
 
 func TestDeleteMensagens(t *testing.T) {
 
 	testsCases := []struct {
 		description  string
-		header       map[string]string
-		id           string
+		setupHeaders map[string]string
+		requestBody  structs.DeleteAppMensagensRequest
 		expected     int
 		expectedDesc string
 	}{
 		{
-			description:  "Deletar Mensagem com sucesso",
-			header:       config.SetupHeadersApp(),
-			id:           getMessageID(),
+			description:  "Excluir Mensagem Com Sucesso",
+			setupHeaders: config.SetupHeadersApp(),
+			requestBody:  structs.DeleteAppMessageRequestBody(GetMessageID(nrInsc, cpf), nrInsc, cpf),
 			expected:     http.StatusOK,
 			expectedDesc: "Sucesso",
 		},
 		{
 			description:  "Tentativa de deletar mensagem com ID inexistente",
-			header:       config.SetupHeadersApp(),
-			id:           uuid.New().String(),
+			setupHeaders: config.SetupHeadersApp(),
+			requestBody:  structs.DeleteAppMessageRequestBody(uuid.New().String(), nrInsc, cpf),
 			expected:     http.StatusOK,
 			expectedDesc: "Sucesso",
 		},
 		{
 			description:  "Tentativa de deletar mensagem com ID vazio",
-			header:       config.SetupHeadersApp(),
-			id:           "",
+			setupHeaders: config.SetupHeadersApp(),
+			requestBody:  structs.DeleteAppMessageRequestBody("", nrInsc, cpf),
 			expected:     http.StatusBadRequest,
 			expectedDesc: "MensagemId",
 		},
 		{
-			description:  "Tentativa de deletar mensagem com header vazio - Unauthorized",
-			header:       map[string]string{},
-			id:           "",
+			description:  "Excluir Mensagem Com nrInsccpf vazio",
+			setupHeaders: config.SetupHeadersApp(),
+			requestBody:  structs.DeleteAppMessageRequestBody(uuid.New().String(), "", ""),
+			expected:     http.StatusBadRequest,
+			expectedDesc: "NrInscEmpregador",
+		},
+		{
+			description:  "Excluir Mensagem Com header vazio",
+			setupHeaders: map[string]string{},
+			requestBody:  structs.DeleteAppMessageRequestBody(GetMessageID(nrInsc, cpf), nrInsc, cpf),
 			expected:     http.StatusUnauthorized,
 			expectedDesc: "Unauthorized",
+		},
+		{
+			description:  "Excluir Mensagem sem body",
+			setupHeaders: config.SetupHeadersApp(),
+			requestBody:  structs.DeleteAppMensagensRequest{},
+			expected:     http.StatusBadRequest,
+			expectedDesc: "NrInscEmpregador,MensagemId",
 		},
 	}
 
@@ -72,8 +74,8 @@ func TestDeleteMensagens(t *testing.T) {
 			api := config.SetupApi()
 
 			resp, err := api.Client.R().
-				SetHeaders(tc.header).
-				SetBody(config.DeleteMensagemAppRequestBody(tc.id)).
+				SetHeaders(tc.setupHeaders).
+				SetBody(tc.requestBody).
 				Delete(api.EndpointsApp["Mensagem"])
 
 			assert.NoError(t, err, "Erro ao fazer a requisição")

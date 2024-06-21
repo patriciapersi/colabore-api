@@ -29,8 +29,20 @@ type Contrato struct {
 }
 
 // STRUCT PARA DELEÇÃO DE MENSAGENS
-type DeleteMensagensRequest struct {
+type DeleteAgenteMensagensRequest struct {
 	MensagemID       string   `json:"MensagemId"`
 	NrInscEmpregador string   `json:"NrInscEmpregador"`
 	ListaCPF         []string `json:"ListaCPF"`
+}
+
+type DeleteAppMensagensRequest struct {
+	MensagemID       string `json:"MensagemId"`
+	NrInscEmpregador string `json:"NrInscEmpregador"`
+	CPF              string `json:"CPF"`
+}
+
+// STRUCT PUT
+type PutAppMensagensRequest struct {
+	NrInscEmpregador string `json:"NrInscEmpregador"`
+	MensagemID       string `json:"mensagemId"`
 }

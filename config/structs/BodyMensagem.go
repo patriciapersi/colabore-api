@@ -26,10 +26,25 @@ func PostMessageRequestBody(nrInsc, cpf string) Mensagem {
 	}
 }
 
-func DeleteMessageRequestBody(mensagemID, nrInsc, cpf string) DeleteMensagensRequest {
-	return DeleteMensagensRequest{
+func DeleteAgenteMessageRequestBody(mensagemID, nrInsc, cpf string) DeleteAgenteMensagensRequest {
+	return DeleteAgenteMensagensRequest{
 		MensagemID:       mensagemID,
 		NrInscEmpregador: nrInsc,
 		ListaCPF:         []string{cpf},
+	}
+}
+
+func DeleteAppMessageRequestBody(mensagemID, nrInsc, cpf string) DeleteAppMensagensRequest {
+	return DeleteAppMensagensRequest{
+		MensagemID:       mensagemID,
+		NrInscEmpregador: nrInsc,
+		CPF:              cpf,
+	}
+}
+
+func PutAppMessageRequestBody(mensagemID, nrInsc string) PutAppMensagensRequest {
+	return PutAppMensagensRequest{
+		NrInscEmpregador: nrInsc,
+		MensagemID:       mensagemID,
 	}
 }

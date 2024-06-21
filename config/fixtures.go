@@ -25,33 +25,33 @@ func DefinicoesRequestBody() map[string]interface{} {
 	}
 }
 
-func MensagensRequestBody() map[string]interface{} {
-	return map[string]interface{}{
-		"ID":               uuid.New().String(),
-		"TpInscEmpregador": "1",
-		"NrInscEmpregador": nrInsc,
-		"MensagemTitulo":   "Teste automatizado",
-		"MensagemCorpo":    "Mensagem enviada pelo teste automatizado",
-		"DataMensagem":     time.Now().Format("02/01/2006"),
-		"Colaboradores": []map[string]interface{}{
-			{
-				"CPF": cpf,
-				"Contrato": map[string]interface{}{
-					"Matricula": "000031",
-					"Cargo":     "ALMOXARIFE",
-				},
-			},
-		},
-	}
-}
+// func MensagensRequestBody() map[string]interface{} {
+// 	return map[string]interface{}{
+// 		"ID":               uuid.New().String(),
+// 		"TpInscEmpregador": "1",
+// 		"NrInscEmpregador": nrInsc,
+// 		"MensagemTitulo":   "Teste automatizado",
+// 		"MensagemCorpo":    "Mensagem enviada pelo teste automatizado",
+// 		"DataMensagem":     time.Now().Format("02/01/2006"),
+// 		"Colaboradores": []map[string]interface{}{
+// 			{
+// 				"CPF": cpf,
+// 				"Contrato": map[string]interface{}{
+// 					"Matricula": "000031",
+// 					"Cargo":     "ALMOXARIFE",
+// 				},
+// 			},
+// 		},
+// 	}
+// }
 
-func DeleteMensagensRequestBody(mensagemID string) map[string]interface{} {
-	return map[string]interface{}{
-		"MensagemId":       mensagemID,
-		"NrInscEmpregador": nrInsc,
-		"ListaCPF":         []string{cpf},
-	}
-}
+// func DeleteAgenteMensagensRequestBody(mensagemID string) map[string]interface{} {
+// 	return map[string]interface{}{
+// 		"MensagemId":       mensagemID,
+// 		"NrInscEmpregador": nrInsc,
+// 		"ListaCPF":         []string{cpf},
+// 	}
+// }
 
 func PostInformacoesFeriasEmpregadoRequestBody() map[string]interface{} {
 	return map[string]interface{}{
@@ -208,20 +208,20 @@ func PostSolicitaAbonoBody() map[string]interface{} {
 	}
 }
 
-func DeleteMensagemAppRequestBody(mensagemID string) map[string]interface{} {
-	return map[string]interface{}{
-		"NrInscEmpregador": nrInsc,
-		"mensagemId":       mensagemID,
-		"CPF":              cpf,
-	}
-}
+// func DeleteMensagemAppRequestBody(mensagemID string) map[string]interface{} {
+// 	return map[string]interface{}{
+// 		"NrInscEmpregador": nrInsc,
+// 		"mensagemId":       mensagemID,
+// 		"CPF":              cpf,
+// 	}
+// }
 
-func PutMensagemLidaAppRequestBody(mensagemID string) map[string]interface{} {
-	return map[string]interface{}{
-		"NrInscEmpregador": nrInsc,
-		"mensagemId":       mensagemID,
-	}
-}
+// func PutMensagemLidaAppRequestBody(mensagemID string) map[string]interface{} {
+// 	return map[string]interface{}{
+// 		"NrInscEmpregador": nrInsc,
+// 		"mensagemId":       mensagemID,
+// 	}
+// }
 
 func PostAprovaAbonoBody(tax_id string, cnpj string, matricula string) map[string]interface{} {
 	return map[string]interface{}{

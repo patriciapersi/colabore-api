@@ -75,17 +75,9 @@ func TestPostMensagens(t *testing.T) {
 			assert.Contains(t, string(resp.Body()), tc.expectedDesc, "Descrição de resposta inesperada")
 
 			if tc.setupHeaders != nil {
-				deleteDataAfterTest(id, nrInsc, cpf)
+				DeleteDataAfterTest(id, nrInsc, cpf)
 			}
 
 		})
 	}
-}
-
-func deleteDataAfterTest(id, nrInsc, cpf string) {
-	api := config.SetupApi()
-	api.Client.R().
-		SetHeaders(config.SetupHeadersAgente()).
-		SetBody(structs.DeleteMessageRequestBody(id, nrInsc, cpf)).
-		Delete(api.EndpointsAgente["Mensagem"])
 }
