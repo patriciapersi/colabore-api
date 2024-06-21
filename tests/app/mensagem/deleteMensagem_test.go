@@ -6,6 +6,7 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/patriciapersi/colabore-api/config"
+	agentebody "github.com/patriciapersi/colabore-api/config/agenteBody"
 	"github.com/patriciapersi/colabore-api/config/structs"
 	"github.com/stretchr/testify/assert"
 )
@@ -27,35 +28,35 @@ func TestDeleteMensagens(t *testing.T) {
 		{
 			description:  "Excluir Mensagem Com Sucesso",
 			setupHeaders: config.SetupHeadersApp(),
-			requestBody:  structs.DeleteAppMessageRequestBody(GetMessageID(nrInsc, cpf), nrInsc, cpf),
+			requestBody:  agentebody.DeleteAppMessageRequestBody(GetMessageID(nrInsc, cpf), nrInsc, cpf),
 			expected:     http.StatusOK,
 			expectedDesc: "Sucesso",
 		},
 		{
 			description:  "Tentativa de deletar mensagem com ID inexistente",
 			setupHeaders: config.SetupHeadersApp(),
-			requestBody:  structs.DeleteAppMessageRequestBody(uuid.New().String(), nrInsc, cpf),
+			requestBody:  agentebody.DeleteAppMessageRequestBody(uuid.New().String(), nrInsc, cpf),
 			expected:     http.StatusOK,
 			expectedDesc: "Sucesso",
 		},
 		{
 			description:  "Tentativa de deletar mensagem com ID vazio",
 			setupHeaders: config.SetupHeadersApp(),
-			requestBody:  structs.DeleteAppMessageRequestBody("", nrInsc, cpf),
+			requestBody:  agentebody.DeleteAppMessageRequestBody("", nrInsc, cpf),
 			expected:     http.StatusBadRequest,
 			expectedDesc: "MensagemId",
 		},
 		{
 			description:  "Excluir Mensagem Com nrInsccpf vazio",
 			setupHeaders: config.SetupHeadersApp(),
-			requestBody:  structs.DeleteAppMessageRequestBody(uuid.New().String(), "", ""),
+			requestBody:  agentebody.DeleteAppMessageRequestBody(uuid.New().String(), "", ""),
 			expected:     http.StatusBadRequest,
 			expectedDesc: "NrInscEmpregador",
 		},
 		{
 			description:  "Excluir Mensagem Com header vazio",
 			setupHeaders: map[string]string{},
-			requestBody:  structs.DeleteAppMessageRequestBody(GetMessageID(nrInsc, cpf), nrInsc, cpf),
+			requestBody:  agentebody.DeleteAppMessageRequestBody(GetMessageID(nrInsc, cpf), nrInsc, cpf),
 			expected:     http.StatusUnauthorized,
 			expectedDesc: "Unauthorized",
 		},

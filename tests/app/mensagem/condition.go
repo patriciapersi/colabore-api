@@ -5,13 +5,13 @@ import (
 	"net/http"
 
 	"github.com/patriciapersi/colabore-api/config"
-	"github.com/patriciapersi/colabore-api/config/structs"
+	agentebody "github.com/patriciapersi/colabore-api/config/agenteBody"
 )
 
 // PRE CONDITION
 func GetMessageID(nrInsc, cpf string) string {
 	api := config.SetupApi()
-	requestBody := structs.PostMessageRequestBody(nrInsc, cpf)
+	requestBody := agentebody.PostMessageRequestBody(nrInsc, cpf)
 	id := requestBody.ID
 
 	resp, _ := api.Client.R().
@@ -31,6 +31,6 @@ func DeleteDataAfterTest(id, nrInsc, cpf string) {
 	api := config.SetupApi()
 	api.Client.R().
 		SetHeaders(config.SetupHeadersAgente()).
-		SetBody(structs.DeleteAgenteMessageRequestBody(id, nrInsc, cpf)).
+		SetBody(agentebody.DeleteAgenteMessageRequestBody(id, nrInsc, cpf)).
 		Delete(api.EndpointsAgente["Mensagem"])
 }

@@ -6,6 +6,7 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/patriciapersi/colabore-api/config"
+	agentebody "github.com/patriciapersi/colabore-api/config/agenteBody"
 	"github.com/patriciapersi/colabore-api/config/structs"
 	"github.com/stretchr/testify/assert"
 )
@@ -27,42 +28,42 @@ func TestDeleteMensagens(t *testing.T) {
 		{
 			description:  "Excluir Mensagem Com Sucesso",
 			setupHeaders: config.SetupHeadersAgente(),
-			requestBody:  structs.DeleteAgenteMessageRequestBody(GetMessageID(nrInsc, cpf), nrInsc, cpf),
+			requestBody:  agentebody.DeleteAgenteMessageRequestBody(GetMessageID(nrInsc, cpf), nrInsc, cpf),
 			expected:     http.StatusOK,
 			expectedDesc: "Sucesso",
 		},
 		{
 			description:  "Excluir Mensagem Com ID Inexistente",
 			setupHeaders: config.SetupHeadersAgente(),
-			requestBody:  structs.DeleteAgenteMessageRequestBody(uuid.New().String(), nrInsc, cpf),
+			requestBody:  agentebody.DeleteAgenteMessageRequestBody(uuid.New().String(), nrInsc, cpf),
 			expected:     http.StatusOK,
 			expectedDesc: "Sucesso",
 		},
 		{
 			description:  "Excluir Mensagem Com nrInsc vazio",
 			setupHeaders: config.SetupHeadersAgente(),
-			requestBody:  structs.DeleteAgenteMessageRequestBody(uuid.New().String(), "", cpf),
+			requestBody:  agentebody.DeleteAgenteMessageRequestBody(uuid.New().String(), "", cpf),
 			expected:     http.StatusBadRequest,
 			expectedDesc: "Corpo da requisição não contém chaves: NrInscEmpregador",
 		},
 		{
 			description:  "Excluir Mensagem Com cpf vazio",
 			setupHeaders: config.SetupHeadersAgente(),
-			requestBody:  structs.DeleteAgenteMessageRequestBody(uuid.New().String(), nrInsc, ""),
+			requestBody:  agentebody.DeleteAgenteMessageRequestBody(uuid.New().String(), nrInsc, ""),
 			expected:     http.StatusBadRequest,
 			expectedDesc: "Corpo da requisição não contém chaves: ListaCPF[0]",
 		},
 		{
 			description:  "Excluir Mensagem Com nrInsccpf vazio",
 			setupHeaders: config.SetupHeadersAgente(),
-			requestBody:  structs.DeleteAgenteMessageRequestBody(uuid.New().String(), "", ""),
+			requestBody:  agentebody.DeleteAgenteMessageRequestBody(uuid.New().String(), "", ""),
 			expected:     http.StatusBadRequest,
 			expectedDesc: "Corpo da requisição não contém chaves: NrInscEmpregador",
 		},
 		{
 			description:  "Excluir Mensagem Com header vazio",
 			setupHeaders: map[string]string{},
-			requestBody:  structs.DeleteAgenteMessageRequestBody(GetMessageID(nrInsc, cpf), nrInsc, cpf),
+			requestBody:  agentebody.DeleteAgenteMessageRequestBody(GetMessageID(nrInsc, cpf), nrInsc, cpf),
 			expected:     http.StatusUnauthorized,
 			expectedDesc: "Unauthorized",
 		},

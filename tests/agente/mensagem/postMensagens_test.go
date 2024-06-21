@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/patriciapersi/colabore-api/config"
+	agentebody "github.com/patriciapersi/colabore-api/config/agenteBody"
 	"github.com/patriciapersi/colabore-api/config/structs"
 	"github.com/stretchr/testify/assert"
 )
@@ -25,35 +26,35 @@ func TestPostMensagens(t *testing.T) {
 		{
 			description:  "Teste envio de mensagem com sucesso",
 			setupHeaders: config.SetupHeadersAgente(),
-			requestBody:  structs.PostMessageRequestBody(nrInsc, cpf),
+			requestBody:  agentebody.PostMessageRequestBody(nrInsc, cpf),
 			expected:     http.StatusOK,
 			expectedDesc: "Sucesso",
 		},
 		{
 			description:  "Teste envio de mensagem Sem o nrInsc e sem CPF",
 			setupHeaders: config.SetupHeadersAgente(),
-			requestBody:  structs.PostMessageRequestBody("", ""),
+			requestBody:  agentebody.PostMessageRequestBody("", ""),
 			expected:     http.StatusBadRequest,
 			expectedDesc: "Corpo da requisicao nao contem chaves: NrInscEmpregador",
 		},
 		{
 			description:  "Teste envio de mensagem Sem o nrInsc",
 			setupHeaders: config.SetupHeadersAgente(),
-			requestBody:  structs.PostMessageRequestBody("", cpf),
+			requestBody:  agentebody.PostMessageRequestBody("", cpf),
 			expected:     http.StatusBadRequest,
 			expectedDesc: "Corpo da requisicao nao contem chaves: NrInscEmpregador",
 		},
 		{
 			description:  "Teste envio de mensagem sem o CPF",
 			setupHeaders: config.SetupHeadersAgente(),
-			requestBody:  structs.PostMessageRequestBody(nrInsc, ""),
+			requestBody:  agentebody.PostMessageRequestBody(nrInsc, ""),
 			expected:     http.StatusBadRequest,
 			expectedDesc: "Corpo da requisicao nao contem chaves: Colaboradores[0].CPF",
 		},
 		{
 			description:  "Teste envio de mensagem sem o header",
 			setupHeaders: map[string]string{},
-			requestBody:  structs.PostMessageRequestBody(nrInsc, cpf),
+			requestBody:  agentebody.PostMessageRequestBody(nrInsc, cpf),
 			expected:     http.StatusUnauthorized,
 			expectedDesc: "Unauthorized",
 		},

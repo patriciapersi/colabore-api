@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/patriciapersi/colabore-api/config"
+	agentebody "github.com/patriciapersi/colabore-api/config/agenteBody"
 	"github.com/patriciapersi/colabore-api/config/structs"
 	"github.com/stretchr/testify/assert"
 )
@@ -17,7 +18,7 @@ const (
 
 func getId() string {
 	api := config.SetupApi()
-	requestBody := structs.PostPesquisaRequestBody(nrInsc, cpf)
+	requestBody := agentebody.PostPesquisaRequestBody(nrInsc, cpf)
 	id := requestBody.ID
 	resp, _ := api.Client.R().
 		SetHeaders(config.SetupHeadersAgente()).
@@ -44,28 +45,28 @@ func TestDeletePesquisa(t *testing.T) {
 		{
 			description:  "Deletar Pesquisas com sucesso",
 			setupHeaders: config.SetupHeadersAgente(),
-			requestBody:  structs.DeletePesquisaBody(getId(), nrInsc, cpf),
+			requestBody:  agentebody.DeletePesquisaBody(getId(), nrInsc, cpf),
 			expected:     http.StatusOK,
 			expectedDesc: "Sucesso",
 		},
 		{
 			description:  "Tentar Deletar Pesquisas com ID Vazio",
 			setupHeaders: config.SetupHeadersAgente(),
-			requestBody:  structs.DeletePesquisaBody(nrInsc, cpf, ""),
+			requestBody:  agentebody.DeletePesquisaBody(nrInsc, cpf, ""),
 			expected:     http.StatusBadRequest,
 			expectedDesc: "Quantidade de Registros não processados: 1",
 		},
 		{
 			description:  "Deletar Pesquisas com nrInsc Vazio",
 			setupHeaders: config.SetupHeadersAgente(),
-			requestBody:  structs.DeletePesquisaBody(getId(), "", cpf),
+			requestBody:  agentebody.DeletePesquisaBody(getId(), "", cpf),
 			expected:     http.StatusBadRequest,
 			expectedDesc: "Quantidade de Registros não processados: 1",
 		},
 		{
 			description:  "Tentar Deletar Pesquisas com body vazio",
 			setupHeaders: config.SetupHeadersAgente(),
-			requestBody:  structs.DeletePesquisaBody("", "", ""),
+			requestBody:  agentebody.DeletePesquisaBody("", "", ""),
 			expected:     http.StatusBadRequest,
 			expectedDesc: "Quantidade de Registros não processados: 1",
 		},
@@ -79,7 +80,7 @@ func TestDeletePesquisa(t *testing.T) {
 		{
 			description:  "Deletar Pesquisas com sucesso",
 			setupHeaders: map[string]string{},
-			requestBody:  structs.DeletePesquisaBody(getId(), nrInsc, cpf),
+			requestBody:  agentebody.DeletePesquisaBody(getId(), nrInsc, cpf),
 			expected:     http.StatusUnauthorized,
 			expectedDesc: "Unauthorized",
 		},

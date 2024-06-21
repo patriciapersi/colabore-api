@@ -6,6 +6,7 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/patriciapersi/colabore-api/config"
+	agentebody "github.com/patriciapersi/colabore-api/config/agenteBody"
 	"github.com/patriciapersi/colabore-api/config/structs"
 	"github.com/stretchr/testify/assert"
 )
@@ -22,21 +23,21 @@ func TestAtualizacaoMensagens(t *testing.T) {
 		{
 			description:  "Atualizar Mensagem com Sucesso - Marcar como Lida",
 			setupHeaders: config.SetupHeadersApp(),
-			requestBody:  structs.PutAppMessageRequestBody(GetMessageID(nrInsc, cpf), nrInsc),
+			requestBody:  agentebody.PutAppMessageRequestBody(GetMessageID(nrInsc, cpf), nrInsc),
 			expected:     http.StatusOK,
 			expectedDesc: "Sucesso",
 		},
 		{
 			description:  "Tentar Atualizar Mensagem com NrInscEMpregado Vazio",
 			setupHeaders: config.SetupHeadersApp(),
-			requestBody:  structs.PutAppMessageRequestBody(uuid.New().String(), ""),
+			requestBody:  agentebody.PutAppMessageRequestBody(uuid.New().String(), ""),
 			expected:     http.StatusBadRequest,
 			expectedDesc: "ERRO",
 		},
 		{
 			description:  "Tentar Atualizar Mensagem com header Vazio",
 			setupHeaders: map[string]string{},
-			requestBody:  structs.PutAppMessageRequestBody(uuid.New().String(), nrInsc),
+			requestBody:  agentebody.PutAppMessageRequestBody(uuid.New().String(), nrInsc),
 			expected:     http.StatusUnauthorized,
 			expectedDesc: "Unauthorized",
 		},

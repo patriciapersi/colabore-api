@@ -1,16 +1,17 @@
-package structs
+package agentebody
 
 import (
 	"time"
 
 	"github.com/bxcodec/faker/v3"
 	"github.com/google/uuid"
+	"github.com/patriciapersi/colabore-api/config/structs"
 )
 
-func PostPesquisaRequestBody(nrInsc, cpf string) Pesquisa {
+func PostPesquisaRequestBody(nrInsc, cpf string) structs.Pesquisa {
 	perguntaID := uuid.New().String()
 
-	return Pesquisa{
+	return structs.Pesquisa{
 		ID:                 uuid.New().String(),
 		Inicio:             time.Now().Format("02/01/2006"),
 		Fim:                time.Now().Format("02/01/2006"),
@@ -20,10 +21,10 @@ func PostPesquisaRequestBody(nrInsc, cpf string) Pesquisa {
 		PesquisaAnonima:    true,
 		IndependeMatricula: true,
 		Versao:             uuid.New().String(),
-		Perguntas: []Pergunta{
+		Perguntas: []structs.Pergunta{
 			{
 				ID:          perguntaID,
-				Tipo:        SUBJETIVA,
+				Tipo:        structs.SUBJETIVA,
 				Ordem:       "1",
 				Texto:       faker.Word(),
 				Obrigatoria: true,
@@ -32,7 +33,7 @@ func PostPesquisaRequestBody(nrInsc, cpf string) Pesquisa {
 				Respostas:   []map[string]interface{}{},
 			},
 		},
-		Colaboradores: []Colaboradores{
+		Colaboradores: []structs.Colaboradores{
 			{
 				Matricula:        "000031",
 				CPF:              cpf,
@@ -42,9 +43,9 @@ func PostPesquisaRequestBody(nrInsc, cpf string) Pesquisa {
 	}
 }
 
-func DeletePesquisaBody(pesquisaId, nrInsc, cpf string) DeletePesquisa {
-	return DeletePesquisa{
-		Pesquisas: []PesquisaDeletada{
+func DeletePesquisaBody(pesquisaId, nrInsc, cpf string) structs.DeletePesquisa {
+	return structs.DeletePesquisa{
+		Pesquisas: []structs.PesquisaDeletada{
 			{
 				Matricula:        "000031",
 				CPF:              cpf,

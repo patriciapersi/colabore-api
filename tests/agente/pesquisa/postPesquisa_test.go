@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/patriciapersi/colabore-api/config"
+	agentebody "github.com/patriciapersi/colabore-api/config/agenteBody"
 	"github.com/patriciapersi/colabore-api/config/structs"
 	"github.com/stretchr/testify/assert"
 )
@@ -25,21 +26,21 @@ func TestPostPesquisa(t *testing.T) {
 		{
 			description:  "Inserir Pesquisas com sucesso",
 			setupHeaders: config.SetupHeadersAgente(),
-			requestBody:  structs.PostPesquisaRequestBody(nrInsc, cpf),
+			requestBody:  agentebody.PostPesquisaRequestBody(nrInsc, cpf),
 			expected:     http.StatusOK,
 			expectedDesc: "Sucesso",
 		},
 		{
 			description:  "Inserir Pesquisa com nrinsc e cpf vazio",
 			setupHeaders: config.SetupHeadersAgente(),
-			requestBody:  structs.PostPesquisaRequestBody("", ""),
+			requestBody:  agentebody.PostPesquisaRequestBody("", ""),
 			expected:     http.StatusOK,
 			expectedDesc: "Sucesso",
 		},
 		{
 			description:  "Inserir Pesquisa com header vazio",
 			setupHeaders: map[string]string{},
-			requestBody:  structs.PostPesquisaRequestBody("", ""),
+			requestBody:  agentebody.PostPesquisaRequestBody("", ""),
 			expected:     http.StatusUnauthorized,
 			expectedDesc: "Unauthorized",
 		},
@@ -79,6 +80,6 @@ func deleteDataAfterTest(id, nrInsc, cpf string) {
 	api := config.SetupApi()
 	api.Client.R().
 		SetHeaders(config.SetupHeadersAgente()).
-		SetBody(structs.DeletePesquisaBody(id, nrInsc, cpf)).
+		SetBody(agentebody.DeletePesquisaBody(id, nrInsc, cpf)).
 		Delete(api.EndpointsAgente["Pesquisa"])
 }
