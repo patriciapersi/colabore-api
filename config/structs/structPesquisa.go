@@ -46,6 +46,6 @@ type PesquisaDeletada struct {
 	PesquisaId       string `json:"PesquisaId"`
 }
 
-type DeleteRequest struct {
+type DeletePesquisa struct {
 	Pesquisas []PesquisaDeletada `json:"pesquisas"`
 }

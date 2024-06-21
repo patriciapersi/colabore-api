@@ -42,8 +42,8 @@ func PostPesquisaRequestBody(nrInsc, cpf string) Pesquisa {
 	}
 }
 
-func DeletePesquisaBody(pesquisaId, nrInsc, cpf string) DeleteRequest {
-	return DeleteRequest{
+func DeletePesquisaBody(pesquisaId, nrInsc, cpf string) DeletePesquisa {
+	return DeletePesquisa{
 		Pesquisas: []PesquisaDeletada{
 			{
 				Matricula:        "000031",
