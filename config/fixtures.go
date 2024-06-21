@@ -332,3 +332,10 @@ func PostCandidatoBody(tax_id string, cnpj string) map[string]interface{} {
 		"CPF":              tax_id,
 	}
 }
+
+func PutReenviarCandidatoBody(tax_id string, cnpj string) map[string]interface{} {
+	return map[string]interface{}{
+		"NrInscEmpregador": cnpj,
+		"CPF":              tax_id,
+	}
+}
