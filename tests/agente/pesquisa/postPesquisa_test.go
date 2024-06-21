@@ -5,73 +5,80 @@ import (
 	"testing"
 
 	"github.com/patriciapersi/colabore-api/config"
+	"github.com/patriciapersi/colabore-api/config/structs"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestPostPesquisa(t *testing.T) {
+	const (
+		nrInsc = "10821992"
+		cpf    = "60515860409"
+	)
 
 	testsCases := []struct {
-		description      string
-		NrInscEmpregador string
-		setupBody        bool
-		header           map[string]string
-		expected         int
-		expectedDesc     string
+		description  string
+		setupHeaders map[string]string
+		requestBody  structs.Pesquisa
+		expected     int
+		expectedDesc string
 	}{
 		{
 			description:  "Inserir Pesquisas com sucesso",
-			setupBody:    true,
-			header:       config.SetupHeadersAgente(),
+			setupHeaders: config.SetupHeadersAgente(),
+			requestBody:  structs.PostPesquisaRequestBody(nrInsc, cpf),
 			expected:     http.StatusOK,
 			expectedDesc: "Sucesso",
 		},
 		{
-			description:  "Inserir Pesquisas com sucesso",
-			setupBody:    false,
-			header:       config.SetupHeadersAgente(),
-			expected:     http.StatusBadRequest,
-			expectedDesc: "Corpo da requisição não contém",
+			description:  "Inserir Pesquisa com nrinsc e cpf vazio",
+			setupHeaders: config.SetupHeadersAgente(),
+			requestBody:  structs.PostPesquisaRequestBody("", ""),
+			expected:     http.StatusOK,
+			expectedDesc: "Sucesso",
 		},
 		{
-			description:  "Inserir Pesquisas com sucesso",
-			setupBody:    false,
-			header:       map[string]string{},
+			description:  "Inserir Pesquisa com header vazio",
+			setupHeaders: map[string]string{},
+			requestBody:  structs.PostPesquisaRequestBody("", ""),
 			expected:     http.StatusUnauthorized,
 			expectedDesc: "Unauthorized",
+		},
+		{
+			description:  "Inserir Pesquisa com body vazio",
+			setupHeaders: config.SetupHeadersAgente(),
+			requestBody:  structs.Pesquisa{},
+			expected:     http.StatusBadRequest,
+			expectedDesc: "Quantidade de Registros não processados: 1",
 		},
 	}
 
 	for _, tc := range testsCases {
 		t.Run(tc.description, func(t *testing.T) {
-
 			api := config.SetupApi()
 
-			requestBody := config.PostPesquisaRequestBody()
-			id := requestBody["id"].(string)
+			id := tc.requestBody.ID
 
-			var body interface{}
-			if tc.setupBody {
-				body = requestBody
-
-			}
 			resp, err := api.Client.R().
-				SetHeaders(tc.header).
-				SetBody(body).
+				SetHeaders(tc.setupHeaders).
+				SetBody(tc.requestBody).
 				Post(api.EndpointsAgente["Pesquisa"])
 
 			assert.NoError(t, err, "Erro ao fazer a requisição")
 			assert.Equal(t, tc.expected, resp.StatusCode(), "Status de resposta inesperado")
 			assert.Contains(t, string(resp.Body()), tc.expectedDesc, "Descrição de resposta inesperada")
 
-			deleteResp, _ := api.Client.R().
-				SetHeaders(config.SetupHeadersAgente()).
-				SetBody(config.DeletePesquisaBody(id)).
-				Delete(api.EndpointsAgente["Pesquisa"])
-
-			if deleteResp.StatusCode() != http.StatusOK {
-				t.Fatalf("Falha ao excluir a pesquisa criada: status %d", deleteResp.StatusCode())
+			if tc.setupHeaders != nil {
+				deleteDataAfterTest(id, nrInsc, cpf)
 			}
 
 		})
 	}
+}
+
+func deleteDataAfterTest(id, nrInsc, cpf string) {
+	api := config.SetupApi()
+	api.Client.R().
+		SetHeaders(config.SetupHeadersAgente()).
+		SetBody(structs.DeletePesquisaBody(id, nrInsc, cpf)).
+		Delete(api.EndpointsAgente["Pesquisa"])
 }
