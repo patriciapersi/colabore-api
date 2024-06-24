@@ -2,9 +2,6 @@ package config
 
 import (
 	"time"
-
-	"github.com/bxcodec/faker/v3"
-	"github.com/google/uuid"
 )
 
 var nrInsc string = "10821992"
@@ -24,34 +21,6 @@ func DefinicoesRequestBody() map[string]interface{} {
 		},
 	}
 }
-
-// func MensagensRequestBody() map[string]interface{} {
-// 	return map[string]interface{}{
-// 		"ID":               uuid.New().String(),
-// 		"TpInscEmpregador": "1",
-// 		"NrInscEmpregador": nrInsc,
-// 		"MensagemTitulo":   "Teste automatizado",
-// 		"MensagemCorpo":    "Mensagem enviada pelo teste automatizado",
-// 		"DataMensagem":     time.Now().Format("02/01/2006"),
-// 		"Colaboradores": []map[string]interface{}{
-// 			{
-// 				"CPF": cpf,
-// 				"Contrato": map[string]interface{}{
-// 					"Matricula": "000031",
-// 					"Cargo":     "ALMOXARIFE",
-// 				},
-// 			},
-// 		},
-// 	}
-// }
-
-// func DeleteAgenteMensagensRequestBody(mensagemID string) map[string]interface{} {
-// 	return map[string]interface{}{
-// 		"MensagemId":       mensagemID,
-// 		"NrInscEmpregador": nrInsc,
-// 		"ListaCPF":         []string{cpf},
-// 	}
-// }
 
 func PostInformacoesFeriasEmpregadoRequestBody() map[string]interface{} {
 	return map[string]interface{}{
@@ -182,145 +151,6 @@ func GestoresRhRequestBody() map[string]interface{} {
 						},
 					},
 				},
-			},
-		},
-	}
-}
-
-// func PostSolicitaAbonoBody() map[string]interface{} {
-// 	return map[string]interface{}{
-// 		"Abonos": []map[string]interface{}{
-// 			{
-// 				"NrInscEmpregador":    nrInsc,
-// 				"Evento":              "3",
-// 				"CPF":                 cpf,
-// 				"Matricula":           "000031",
-// 				"Nome":                "Sandra Simone Cecília Martins",
-// 				"DataAbono":           time.Now().Format("2006-01-02"),
-// 				"MotivoId":            "00101",
-// 				"StatusSol":           "1",
-// 				"DataSolicitacao":     time.Now().Format("2006-01-02"),
-// 				"DataSolicitacaoTz":   "GMT-0000",
-// 				"DataSolicitacaoTzId": "America/Fortaleza",
-// 				"Turnos":              []string{"1", "2", "3", "4"},
-// 			},
-// 		},
-// 	}
-// }
-
-// func DeleteMensagemAppRequestBody(mensagemID string) map[string]interface{} {
-// 	return map[string]interface{}{
-// 		"NrInscEmpregador": nrInsc,
-// 		"mensagemId":       mensagemID,
-// 		"CPF":              cpf,
-// 	}
-// }
-
-// func PutMensagemLidaAppRequestBody(mensagemID string) map[string]interface{} {
-// 	return map[string]interface{}{
-// 		"NrInscEmpregador": nrInsc,
-// 		"mensagemId":       mensagemID,
-// 	}
-// }
-
-func PostAprovaAbonoBody(tax_id string, cnpj string, matricula string) map[string]interface{} {
-	return map[string]interface{}{
-		"Abonos": []map[string]interface{}{
-			{
-				"NrInscEmpregador": cnpj,
-				"Evento":           "3",
-				"CPF":              tax_id,
-				"Matricula":        matricula,
-				"Nome":             "Sandra Simone Cecília Martins",
-				"DataAbono":        time.Now().Format("2006-01-02"),
-				"MotivoId":         "00101",
-				"StatusSol":        "2",
-				"Turnos":           []string{"1", "2", "3", "4"},
-			},
-		},
-	}
-}
-
-func DeletePesquisaBody(pesquisaId string) map[string]interface{} {
-	return map[string]interface{}{
-		"pesquisas": []map[string]interface{}{
-			{
-				"Matricula":        "000031",
-				"CPF":              "60515860409",
-				"NrInscEmpregador": nrInsc,
-				"PesquisaId":       pesquisaId,
-			},
-		},
-	}
-}
-
-func PostPesquisaRequestBody() map[string]interface{} {
-	perguntaId := uuid.New().String()
-
-	return map[string]interface{}{
-		"id":                 uuid.New().String(),
-		"inicio":             time.Now().Format("02/01/2006"),
-		"fim":                time.Now().Format("02/01/2006"),
-		"NrInscEmpregador":   nrInsc,
-		"titulo":             faker.Word(),
-		"monitoramentoSaude": false,
-		"pesquisaAnonima":    true,
-		"independeMatricula": true,
-		"Versao":             uuid.New().String(),
-		"perguntas": []map[string]interface{}{
-			{
-				"id":          perguntaId,
-				"tipo":        "SUBJETIVA",
-				"ordem":       "1",
-				"texto":       faker.Word(),
-				"obrigatoria": true,
-				"notaMinima":  0,
-				"notaMaxima":  0,
-				"respostas":   []map[string]interface{}{},
-			},
-		},
-		"colaboradores": []map[string]interface{}{
-			{
-				"Matricula":        "000031",
-				"CPF":              cpf,
-				"NrInscEmpregador": nrInsc,
-			},
-		},
-	}
-}
-
-func PutReveterAbonoBody(tax_id string, cnpj string, matricula string) map[string]interface{} {
-	return map[string]interface{}{
-		"Abonos": []map[string]interface{}{
-			{
-				"NrInscEmpregador": cnpj,
-				"Evento":           "3",
-				"CPF":              tax_id,
-				"Matricula":        matricula,
-				"DataAbono":        time.Now().Format("2006-01-02"),
-				"MotivoId":         "00101",
-				"Turnos":           []string{"1", "2", "3", "4"},
-			},
-		},
-	}
-}
-
-func PostSolicitaAbono2Body(tax_id string, cnpj string, matricula string) map[string]interface{} {
-	return map[string]interface{}{
-		"Abonos": []map[string]interface{}{
-			{
-				"NrInscEmpregador":    cnpj,
-				"Evento":              "3",
-				"CPF":                 tax_id,
-				"Matricula":           matricula,
-				"Nome":                "Sandra Simone Cecília Martins",
-				"DataAbono":           time.Now().Format("2006-01-02"),
-				"MotivoId":            "00101",
-				"StatusSol":           "1",
-				"DataSolicitacao":     time.Now().Format("2006-01-02"),
-				"DataSolicitacaoTz":   "GMT-0000",
-				"DataSolicitacaoTzId": "America/Fortaleza",
-				"Turnos":              []string{"1", "2", "3", "4"},
 			},
 		},
 	}
