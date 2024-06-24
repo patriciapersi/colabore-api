@@ -8,6 +8,7 @@ import (
 	"github.com/patriciapersi/colabore-api/config"
 	agentebody "github.com/patriciapersi/colabore-api/config/agenteBody"
 	"github.com/patriciapersi/colabore-api/config/structs"
+	"github.com/patriciapersi/colabore-api/helper"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -28,7 +29,7 @@ func TestDeleteMensagens(t *testing.T) {
 		{
 			description:  "Excluir Mensagem Com Sucesso",
 			setupHeaders: config.SetupHeadersApp(),
-			requestBody:  agentebody.DeleteAppMessageRequestBody(GetMessageID(nrInsc, cpf), nrInsc, cpf),
+			requestBody:  agentebody.DeleteAppMessageRequestBody(helper.GetMessageID(nrInsc, cpf), nrInsc, cpf),
 			expected:     http.StatusOK,
 			expectedDesc: "Sucesso",
 		},
@@ -56,7 +57,7 @@ func TestDeleteMensagens(t *testing.T) {
 		{
 			description:  "Excluir Mensagem Com header vazio",
 			setupHeaders: map[string]string{},
-			requestBody:  agentebody.DeleteAppMessageRequestBody(GetMessageID(nrInsc, cpf), nrInsc, cpf),
+			requestBody:  agentebody.DeleteAppMessageRequestBody(helper.GetMessageID(nrInsc, cpf), nrInsc, cpf),
 			expected:     http.StatusUnauthorized,
 			expectedDesc: "Unauthorized",
 		},

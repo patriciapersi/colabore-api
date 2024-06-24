@@ -8,6 +8,7 @@ import (
 	"github.com/patriciapersi/colabore-api/config"
 	agentebody "github.com/patriciapersi/colabore-api/config/agenteBody"
 	"github.com/patriciapersi/colabore-api/config/structs"
+	"github.com/patriciapersi/colabore-api/helper"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -23,7 +24,7 @@ func TestAtualizacaoMensagens(t *testing.T) {
 		{
 			description:  "Atualizar Mensagem com Sucesso - Marcar como Lida",
 			setupHeaders: config.SetupHeadersApp(),
-			requestBody:  agentebody.PutAppMessageRequestBody(GetMessageID(nrInsc, cpf), nrInsc),
+			requestBody:  agentebody.PutAppMessageRequestBody(helper.GetMessageID(nrInsc, cpf), nrInsc),
 			expected:     http.StatusOK,
 			expectedDesc: "Sucesso",
 		},
@@ -60,7 +61,7 @@ func TestAtualizacaoMensagens(t *testing.T) {
 			//DELETA A MENSAGEM
 			if tc.setupHeaders != nil {
 				id := tc.requestBody.MensagemID
-				DeleteDataAfterTest(id, nrInsc, cpf)
+				helper.DeleteDataAfterTest(id, nrInsc, cpf)
 			}
 
 		})

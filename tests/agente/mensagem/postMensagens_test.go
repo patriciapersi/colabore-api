@@ -7,6 +7,7 @@ import (
 	"github.com/patriciapersi/colabore-api/config"
 	agentebody "github.com/patriciapersi/colabore-api/config/agenteBody"
 	"github.com/patriciapersi/colabore-api/config/structs"
+	helper "github.com/patriciapersi/colabore-api/helper"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -76,7 +77,7 @@ func TestPostMensagens(t *testing.T) {
 			assert.Contains(t, string(resp.Body()), tc.expectedDesc, "Descrição de resposta inesperada")
 
 			if tc.setupHeaders != nil {
-				DeleteDataAfterTest(id, nrInsc, cpf)
+				helper.DeleteDataAfterTest(id, nrInsc, cpf)
 			}
 
 		})
