@@ -11,6 +11,12 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+const (
+	nrInsc    = "10821992"
+	cpf       = "60515860409"
+	matricula = "000034"
+)
+
 func TestPostSolicitaAbono(t *testing.T) {
 
 	testCases := []struct {
@@ -47,7 +53,7 @@ func TestPostSolicitaAbono(t *testing.T) {
 		t.Run(tc.description, func(t *testing.T) {
 
 			if tc.setupHeaders != nil && len(tc.requestBody.Abonos) > 0 {
-				helper.CreateAbonoStatusPendente(nrInsc, cpf, matricula, structs.PENDENTE)
+				helper.CreateAbono(nrInsc, cpf, matricula, structs.PENDENTE)
 			}
 			api := config.SetupApi()
 

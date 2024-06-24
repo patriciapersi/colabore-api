@@ -25,3 +25,17 @@ type Abono struct {
 type PostAbonoBody struct {
 	Abonos []Abono `json:"Abonos"`
 }
+
+type AbonoReverter struct {
+	NrInscEmpregador string   `json:"NrInscEmpregador"`
+	Evento           string   `json:"Evento"`
+	CPF              string   `json:"CPF"`
+	Matricula        string   `json:"Matricula"`
+	DataAbono        string   `json:"DataAbono"`
+	MotivoId         string   `json:"MotivoId"`
+	Turnos           []string `json:"Turnos"`
+}
+
+type PutAbonoBody struct {
+	Abonos []AbonoReverter `json:"Abonos"`
+}

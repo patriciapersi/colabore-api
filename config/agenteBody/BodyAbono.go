@@ -23,3 +23,19 @@ func PostSolicitacaoAbono(nrInsc, taxID, matricula string, statusSol structs.Sta
 		},
 	}
 }
+
+func PutReverterSolicitacaoAbono(nrInsc, taxID, matricula string) structs.PutAbonoBody {
+	return structs.PutAbonoBody{
+		Abonos: []structs.AbonoReverter{
+			{
+				NrInscEmpregador: nrInsc,
+				Evento:           "3",
+				CPF:              taxID,
+				Matricula:        matricula,
+				DataAbono:        time.Now().Format("2006-01-02"),
+				MotivoId:         "00101",
+				Turnos:           []string{"1", "2", "3", "4"},
+			},
+		},
+	}
+}

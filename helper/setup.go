@@ -47,7 +47,7 @@ func DeleteDataAfterTest(id, nrInsc, cpf string) {
 //----------------------------------------------------------
 
 // PRE CONDITION PARA ABONOS
-func CreateAbonoStatusPendente(nrInsc, taxID, matricula string, statusSol structs.StatusSolicitacao) {
+func CreateAbono(nrInsc, taxID, matricula string, statusSol structs.StatusSolicitacao) {
 	api := config.SetupApi()
 	api.Client.R().
 		SetHeaders(config.SetupHeadersAgente()).

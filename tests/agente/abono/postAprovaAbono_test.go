@@ -12,9 +12,9 @@ import (
 )
 
 const (
-	nrInsc    = "10821992"
-	cpf       = "60515860409"
-	matricula = "000034"
+	nrInscr = "10821992"
+	tax_id  = "60515860409"
+	matric  = "000034"
 )
 
 func TestPostAprovaAbono(t *testing.T) {
@@ -29,7 +29,7 @@ func TestPostAprovaAbono(t *testing.T) {
 		{
 			description:  "Aprova Solicitação de Abono com Sucesso",
 			setupHeaders: config.SetupHeadersAgente(),
-			requestBody:  agentebody.PostSolicitacaoAbono(nrInsc, cpf, matricula, structs.ACEITO),
+			requestBody:  agentebody.PostSolicitacaoAbono(nrInscr, tax_id, matric, structs.ACEITO),
 			expected:     http.StatusOK,
 			expectedDesc: "Sucesso",
 		},
@@ -53,7 +53,7 @@ func TestPostAprovaAbono(t *testing.T) {
 		t.Run(tc.description, func(t *testing.T) {
 
 			if tc.setupHeaders != nil && len(tc.requestBody.Abonos) > 0 {
-				helper.CreateAbonoStatusPendente(nrInsc, cpf, matricula, structs.PENDENTE)
+				helper.CreateAbono(nrInscr, tax_id, matric, structs.PENDENTE)
 			}
 			api := config.SetupApi()
 
