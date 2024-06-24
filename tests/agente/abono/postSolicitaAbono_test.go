@@ -7,7 +7,6 @@ import (
 	"github.com/patriciapersi/colabore-api/config"
 	agentebody "github.com/patriciapersi/colabore-api/config/agenteBody"
 	"github.com/patriciapersi/colabore-api/config/structs"
-	helper "github.com/patriciapersi/colabore-api/helper"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -51,10 +50,6 @@ func TestPostSolicitaAbono(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.description, func(t *testing.T) {
-
-			if tc.setupHeaders != nil && len(tc.requestBody.Abonos) > 0 {
-				helper.CreateAbono(nrInsc, cpf, matricula, structs.PENDENTE)
-			}
 			api := config.SetupApi()
 
 			resp, err := api.Client.R().
