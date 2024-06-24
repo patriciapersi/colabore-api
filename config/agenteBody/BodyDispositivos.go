@@ -5,7 +5,7 @@ import (
 	"github.com/patriciapersi/colabore-api/config/structs"
 )
 
-func NovoDispositivo(nrInsc string) structs.Dispositivos {
+func Dispositivo(nrInsc string) structs.Dispositivos {
 	return structs.Dispositivos{
 		Cnpj:          nrInsc,
 		DispositivoId: uuid.New().String(),
