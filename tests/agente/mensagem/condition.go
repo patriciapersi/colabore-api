@@ -8,14 +8,21 @@ import (
 	agentebody "github.com/patriciapersi/colabore-api/config/agenteBody"
 )
 
+// setupAPIAndHeaders configura a API e os cabeçalhos
+func setupAPIAndHeaders() (*config.API, map[string]string) {
+	api := config.SetupApi()
+	headers := config.SetupHeadersAgente()
+	return api, headers
+}
+
 // PRE CONDITION
 func GetMessageID(nrInsc, cpf string) string {
-	api := config.SetupApi()
+	api, headers := setupAPIAndHeaders()
 	requestBody := agentebody.PostMessageRequestBody(nrInsc, cpf)
 	id := requestBody.ID
 
 	resp, _ := api.Client.R().
-		SetHeaders(config.SetupHeadersAgente()).
+		SetHeaders(headers).
 		SetBody(requestBody).
 		Post(api.EndpointsAgente["Mensagem"])
 
@@ -28,9 +35,9 @@ func GetMessageID(nrInsc, cpf string) string {
 
 // AFTERCONDITION
 func DeleteDataAfterTest(id, nrInsc, cpf string) {
-	api := config.SetupApi()
+	api, headers := setupAPIAndHeaders()
 	api.Client.R().
-		SetHeaders(config.SetupHeadersAgente()).
+		SetHeaders(headers).
 		SetBody(agentebody.DeleteAgenteMessageRequestBody(id, nrInsc, cpf)).
 		Delete(api.EndpointsAgente["Mensagem"])
 }
