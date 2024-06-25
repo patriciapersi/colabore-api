@@ -28,7 +28,7 @@ func TestDeletePesquisa(t *testing.T) {
 		{
 			description:  "Deletar Pesquisas com sucesso",
 			setupHeaders: config.SetupHeadersAgente(),
-			requestBody:  agentebody.DeletePesquisaBody(helper.GetMessageID(nrInsc, cpf), nrInsc, cpf),
+			requestBody:  agentebody.DeletePesquisaBody(helper.GetPesquisaID(nrInsc, cpf), nrInsc, cpf),
 			expected:     http.StatusOK,
 			expectedDesc: "Sucesso",
 		},
@@ -42,7 +42,7 @@ func TestDeletePesquisa(t *testing.T) {
 		{
 			description:  "Deletar Pesquisas com nrInsc Vazio",
 			setupHeaders: config.SetupHeadersAgente(),
-			requestBody:  agentebody.DeletePesquisaBody(helper.GetMessageID(nrInsc, cpf), "", cpf),
+			requestBody:  agentebody.DeletePesquisaBody(helper.GetPesquisaID(nrInsc, cpf), "", cpf),
 			expected:     http.StatusBadRequest,
 			expectedDesc: "Quantidade de Registros não processados: 1",
 		},
@@ -63,7 +63,7 @@ func TestDeletePesquisa(t *testing.T) {
 		{
 			description:  "Deletar Pesquisas com sucesso",
 			setupHeaders: map[string]string{},
-			requestBody:  agentebody.DeletePesquisaBody(helper.GetMessageID(nrInsc, cpf), nrInsc, cpf),
+			requestBody:  agentebody.DeletePesquisaBody(helper.GetPesquisaID(nrInsc, cpf), nrInsc, cpf),
 			expected:     http.StatusUnauthorized,
 			expectedDesc: "Unauthorized",
 		},
