@@ -5,36 +5,44 @@ import (
 	"testing"
 
 	"github.com/patriciapersi/colabore-api/config"
+	agentebody "github.com/patriciapersi/colabore-api/config/agenteBody"
+	"github.com/patriciapersi/colabore-api/config/structs"
 	"github.com/stretchr/testify/assert"
+)
+
+const (
+	nrInsc    = "10821992"
+	cpf       = "60515860409"
+	matricula = "000034"
 )
 
 func TestPostSolicitaAbono(t *testing.T) {
 
 	testCases := []struct {
 		description  string
-		header       map[string]string
-		setupBody    bool
+		setupHeaders map[string]string
+		requestBody  structs.PostAbonoBody
 		expected     int
 		expectedDesc string
 	}{
 		{
 			description:  "Envia Solicitação de Abono com Sucesso",
-			header:       config.SetupHeadersAgente(),
-			setupBody:    true,
+			setupHeaders: config.SetupHeadersAgente(),
+			requestBody:  agentebody.PostSolicitacaoAbono(nrInsc, cpf, matricula, structs.PENDENTE),
 			expected:     http.StatusOK,
 			expectedDesc: "Sucesso",
 		},
 		{
 			description:  "Tentativa de Envio de solicitação de abono sem body",
-			header:       config.SetupHeadersAgente(),
-			setupBody:    false,
+			setupHeaders: config.SetupHeadersAgente(),
+			requestBody:  structs.PostAbonoBody{},
 			expected:     http.StatusBadRequest,
 			expectedDesc: "Corpo da requisição não contém nenhum abono",
 		},
 		{
 			description:  "Tentativa de Envio de solicitação de abono sem header - Unauthorized",
-			header:       map[string]string{},
-			setupBody:    false,
+			setupHeaders: map[string]string{},
+			requestBody:  structs.PostAbonoBody{},
 			expected:     http.StatusUnauthorized,
 			expectedDesc: "Unauthorized",
 		},
@@ -44,15 +52,9 @@ func TestPostSolicitaAbono(t *testing.T) {
 		t.Run(tc.description, func(t *testing.T) {
 			api := config.SetupApi()
 
-			// Configura os parâmetros do corpo da requisição se necessário
-			var body interface{}
-			if tc.setupBody {
-				body = config.PostSolicitaAbonoBody()
-			}
-
 			resp, err := api.Client.R().
-				SetHeaders(tc.header).
-				SetBody(body).
+				SetHeaders(tc.setupHeaders).
+				SetBody(tc.requestBody).
 				Post(api.EndpointsAgente["Abono"])
 
 			assert.NoError(t, err, "Erro ao fazer a requisição para %s", tc.description)

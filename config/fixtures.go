@@ -25,34 +25,6 @@ func DefinicoesRequestBody() map[string]interface{} {
 	}
 }
 
-// func MensagensRequestBody() map[string]interface{} {
-// 	return map[string]interface{}{
-// 		"ID":               uuid.New().String(),
-// 		"TpInscEmpregador": "1",
-// 		"NrInscEmpregador": nrInsc,
-// 		"MensagemTitulo":   "Teste automatizado",
-// 		"MensagemCorpo":    "Mensagem enviada pelo teste automatizado",
-// 		"DataMensagem":     time.Now().Format("02/01/2006"),
-// 		"Colaboradores": []map[string]interface{}{
-// 			{
-// 				"CPF": cpf,
-// 				"Contrato": map[string]interface{}{
-// 					"Matricula": "000031",
-// 					"Cargo":     "ALMOXARIFE",
-// 				},
-// 			},
-// 		},
-// 	}
-// }
-
-// func DeleteAgenteMensagensRequestBody(mensagemID string) map[string]interface{} {
-// 	return map[string]interface{}{
-// 		"MensagemId":       mensagemID,
-// 		"NrInscEmpregador": nrInsc,
-// 		"ListaCPF":         []string{cpf},
-// 	}
-// }
-
 func PostInformacoesFeriasEmpregadoRequestBody() map[string]interface{} {
 	return map[string]interface{}{
 		"Colaboradores": []interface{}{
@@ -187,57 +159,17 @@ func GestoresRhRequestBody() map[string]interface{} {
 	}
 }
 
-func PostSolicitaAbonoBody() map[string]interface{} {
+func PostCandidatoBody(tax_id string, cnpj string) map[string]interface{} {
 	return map[string]interface{}{
-		"Abonos": []map[string]interface{}{
-			{
-				"NrInscEmpregador":    nrInsc,
-				"Evento":              "3",
-				"CPF":                 cpf,
-				"Matricula":           "000031",
-				"Nome":                "Sandra Simone Cecília Martins",
-				"DataAbono":           time.Now().Format("2006-01-02"),
-				"MotivoId":            "00101",
-				"StatusSol":           "1",
-				"DataSolicitacao":     time.Now().Format("2006-01-02"),
-				"DataSolicitacaoTz":   "GMT-0000",
-				"DataSolicitacaoTzId": "America/Fortaleza",
-				"Turnos":              []string{"1", "2", "3", "4"},
-			},
-		},
+		"NrInscEmpregador": cnpj,
+		"CPF":              tax_id,
 	}
 }
 
-// func DeleteMensagemAppRequestBody(mensagemID string) map[string]interface{} {
-// 	return map[string]interface{}{
-// 		"NrInscEmpregador": nrInsc,
-// 		"mensagemId":       mensagemID,
-// 		"CPF":              cpf,
-// 	}
-// }
-
-// func PutMensagemLidaAppRequestBody(mensagemID string) map[string]interface{} {
-// 	return map[string]interface{}{
-// 		"NrInscEmpregador": nrInsc,
-// 		"mensagemId":       mensagemID,
-// 	}
-// }
-
-func PostAprovaAbonoBody(tax_id string, cnpj string, matricula string) map[string]interface{} {
+func PutReenviarCandidatoBody(tax_id string, cnpj string) map[string]interface{} {
 	return map[string]interface{}{
-		"Abonos": []map[string]interface{}{
-			{
-				"NrInscEmpregador": cnpj,
-				"Evento":           "3",
-				"CPF":              tax_id,
-				"Matricula":        matricula,
-				"Nome":             "Sandra Simone Cecília Martins",
-				"DataAbono":        time.Now().Format("2006-01-02"),
-				"MotivoId":         "00101",
-				"StatusSol":        "2",
-				"Turnos":           []string{"1", "2", "3", "4"},
-			},
-		},
+		"NrInscEmpregador": cnpj,
+		"CPF":              tax_id,
 	}
 }
 
@@ -253,10 +185,8 @@ func DeletePesquisaBody(pesquisaId string) map[string]interface{} {
 		},
 	}
 }
-
 func PostPesquisaRequestBody() map[string]interface{} {
 	perguntaId := uuid.New().String()
-
 	return map[string]interface{}{
 		"id":                 uuid.New().String(),
 		"inicio":             time.Now().Format("02/01/2006"),
@@ -286,56 +216,5 @@ func PostPesquisaRequestBody() map[string]interface{} {
 				"NrInscEmpregador": nrInsc,
 			},
 		},
-	}
-}
-
-func PutReveterAbonoBody(tax_id string, cnpj string, matricula string) map[string]interface{} {
-	return map[string]interface{}{
-		"Abonos": []map[string]interface{}{
-			{
-				"NrInscEmpregador": cnpj,
-				"Evento":           "3",
-				"CPF":              tax_id,
-				"Matricula":        matricula,
-				"DataAbono":        time.Now().Format("2006-01-02"),
-				"MotivoId":         "00101",
-				"Turnos":           []string{"1", "2", "3", "4"},
-			},
-		},
-	}
-}
-
-func PostSolicitaAbono2Body(tax_id string, cnpj string, matricula string) map[string]interface{} {
-	return map[string]interface{}{
-		"Abonos": []map[string]interface{}{
-			{
-				"NrInscEmpregador":    cnpj,
-				"Evento":              "3",
-				"CPF":                 tax_id,
-				"Matricula":           matricula,
-				"Nome":                "Sandra Simone Cecília Martins",
-				"DataAbono":           time.Now().Format("2006-01-02"),
-				"MotivoId":            "00101",
-				"StatusSol":           "1",
-				"DataSolicitacao":     time.Now().Format("2006-01-02"),
-				"DataSolicitacaoTz":   "GMT-0000",
-				"DataSolicitacaoTzId": "America/Fortaleza",
-				"Turnos":              []string{"1", "2", "3", "4"},
-			},
-		},
-	}
-}
-
-func PostCandidatoBody(tax_id string, cnpj string) map[string]interface{} {
-	return map[string]interface{}{
-		"NrInscEmpregador": cnpj,
-		"CPF":              tax_id,
-	}
-}
-
-func PutReenviarCandidatoBody(tax_id string, cnpj string) map[string]interface{} {
-	return map[string]interface{}{
-		"NrInscEmpregador": cnpj,
-		"CPF":              tax_id,
 	}
 }
