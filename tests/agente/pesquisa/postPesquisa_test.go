@@ -7,6 +7,7 @@ import (
 	"github.com/patriciapersi/colabore-api/config"
 	agentebody "github.com/patriciapersi/colabore-api/config/agenteBody"
 	"github.com/patriciapersi/colabore-api/config/structs"
+	"github.com/patriciapersi/colabore-api/helper"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -69,17 +70,9 @@ func TestPostPesquisa(t *testing.T) {
 			assert.Contains(t, string(resp.Body()), tc.expectedDesc, "Descrição de resposta inesperada")
 
 			if tc.setupHeaders != nil {
-				deleteDataAfterTest(id, nrInsc, cpf)
+				helper.DeletePesquisaAfterTest(id, nrInsc, cpf)
 			}
 
 		})
 	}
-}
-
-func deleteDataAfterTest(id, nrInsc, cpf string) {
-	api := config.SetupApi()
-	api.Client.R().
-		SetHeaders(config.SetupHeadersAgente()).
-		SetBody(agentebody.DeletePesquisaBody(id, nrInsc, cpf)).
-		Delete(api.EndpointsAgente["Pesquisa"])
 }

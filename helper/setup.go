@@ -75,3 +75,11 @@ func GetPesquisaID(nrInsc, cpf string) string {
 
 	return id
 }
+
+func DeletePesquisaAfterTest(id, nrInsc, cpf string) {
+	api := config.SetupApi()
+	api.Client.R().
+		SetHeaders(config.SetupHeadersAgente()).
+		SetBody(agentebody.DeletePesquisaBody(id, nrInsc, cpf)).
+		Delete(api.EndpointsAgente["Pesquisa"])
+}
