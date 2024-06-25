@@ -10,6 +10,11 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+const (
+	nrInsc = "10821992"
+	cpf    = "12658729375"
+)
+
 func TestDeleteGestor(t *testing.T) {
 
 	testCases := []struct {

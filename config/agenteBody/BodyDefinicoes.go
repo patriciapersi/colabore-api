@@ -9,7 +9,7 @@ func Definicoes(nrInsc string) structs.Definicoes {
 		DefinicoesEmpresa: []structs.DefinicoesEmpresa{
 			{
 				NrInscEmpregador: nrInsc,
-				Ferias: structs.Ferias{
+				Ferias: structs.FeriasConfig{
 					AntecedenciaMinima:     15,
 					HabilitaFerias:         true,
 					ExigeAprovacaoDoGestor: true,
