@@ -17,7 +17,7 @@ func setupAPIAndHeaders() (*config.API, map[string]string) {
 }
 
 // ---------------------------------------------------
-// PRE CONDITION
+// PRE CONDITION MENSAGEm
 func GetMessageID(nrInsc, cpf string) string {
 	api, headers := setupAPIAndHeaders()
 	requestBody := agentebody.PostMessageRequestBody(nrInsc, cpf)
@@ -35,7 +35,7 @@ func GetMessageID(nrInsc, cpf string) string {
 	return id
 }
 
-// AFTERCONDITION
+// AFTERCONDITION MENSAGEM
 func DeleteDataAfterTest(id, nrInsc, cpf string) {
 	api, headers := setupAPIAndHeaders()
 	api.Client.R().
@@ -54,4 +54,24 @@ func CreateAbono(nrInsc, taxID, matricula string, statusSol structs.StatusSolici
 		SetBody(agentebody.PostSolicitacaoAbono(nrInsc, taxID, matricula, statusSol)).
 		Post(api.EndpointsAgente["Abono"])
 
+}
+
+//----------------------------------------------------------
+
+// PRE CONDITION PARA PESQUISA
+func GetPesquisaID(nrInsc, cpf string) string {
+	api := config.SetupApi()
+	requestBody := agentebody.PostPesquisaRequestBody(nrInsc, cpf)
+	id := requestBody.ID
+	resp, _ := api.Client.R().
+		SetHeaders(config.SetupHeadersAgente()).
+		SetBody(requestBody).
+		Post(api.EndpointsAgente["Pesquisa"])
+
+	if resp.StatusCode() != http.StatusOK {
+		log.Printf("Unexpected status code: %d", resp.StatusCode())
+		panic("Falha na requisição")
+	}
+
+	return id
 }

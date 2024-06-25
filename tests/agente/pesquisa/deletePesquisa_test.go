@@ -1,13 +1,13 @@
 package main
 
 import (
-	"log"
 	"net/http"
 	"testing"
 
 	"github.com/patriciapersi/colabore-api/config"
 	agentebody "github.com/patriciapersi/colabore-api/config/agenteBody"
 	"github.com/patriciapersi/colabore-api/config/structs"
+	"github.com/patriciapersi/colabore-api/helper"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -15,23 +15,6 @@ const (
 	nrInsc = "10821992"
 	cpf    = "60515860409"
 )
-
-func getId() string {
-	api := config.SetupApi()
-	requestBody := agentebody.PostPesquisaRequestBody(nrInsc, cpf)
-	id := requestBody.ID
-	resp, _ := api.Client.R().
-		SetHeaders(config.SetupHeadersAgente()).
-		SetBody(requestBody).
-		Post(api.EndpointsAgente["Pesquisa"])
-
-	if resp.StatusCode() != http.StatusOK {
-		log.Printf("Unexpected status code: %d", resp.StatusCode())
-		panic("Falha na requisição")
-	}
-
-	return id
-}
 
 func TestDeletePesquisa(t *testing.T) {
 
@@ -45,7 +28,7 @@ func TestDeletePesquisa(t *testing.T) {
 		{
 			description:  "Deletar Pesquisas com sucesso",
 			setupHeaders: config.SetupHeadersAgente(),
-			requestBody:  agentebody.DeletePesquisaBody(getId(), nrInsc, cpf),
+			requestBody:  agentebody.DeletePesquisaBody(helper.GetMessageID(nrInsc, cpf), nrInsc, cpf),
 			expected:     http.StatusOK,
 			expectedDesc: "Sucesso",
 		},
@@ -59,7 +42,7 @@ func TestDeletePesquisa(t *testing.T) {
 		{
 			description:  "Deletar Pesquisas com nrInsc Vazio",
 			setupHeaders: config.SetupHeadersAgente(),
-			requestBody:  agentebody.DeletePesquisaBody(getId(), "", cpf),
+			requestBody:  agentebody.DeletePesquisaBody(helper.GetMessageID(nrInsc, cpf), "", cpf),
 			expected:     http.StatusBadRequest,
 			expectedDesc: "Quantidade de Registros não processados: 1",
 		},
@@ -80,7 +63,7 @@ func TestDeletePesquisa(t *testing.T) {
 		{
 			description:  "Deletar Pesquisas com sucesso",
 			setupHeaders: map[string]string{},
-			requestBody:  agentebody.DeletePesquisaBody(getId(), nrInsc, cpf),
+			requestBody:  agentebody.DeletePesquisaBody(helper.GetMessageID(nrInsc, cpf), nrInsc, cpf),
 			expected:     http.StatusUnauthorized,
 			expectedDesc: "Unauthorized",
 		},
