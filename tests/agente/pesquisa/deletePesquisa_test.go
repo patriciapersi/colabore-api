@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"testing"
 
+	"github.com/google/uuid"
 	"github.com/patriciapersi/colabore-api/config"
 	agentebody "github.com/patriciapersi/colabore-api/config/agenteBody"
 	"github.com/patriciapersi/colabore-api/config/structs"
@@ -35,14 +36,14 @@ func TestDeletePesquisa(t *testing.T) {
 		{
 			description:  "Tentar Deletar Pesquisas com ID Vazio",
 			setupHeaders: config.SetupHeadersAgente(),
-			requestBody:  agentebody.DeletePesquisaBody(nrInsc, cpf, ""),
+			requestBody:  agentebody.DeletePesquisaBody("", nrInsc, cpf),
 			expected:     http.StatusBadRequest,
 			expectedDesc: "Quantidade de Registros não processados: 1",
 		},
 		{
 			description:  "Deletar Pesquisas com nrInsc Vazio",
 			setupHeaders: config.SetupHeadersAgente(),
-			requestBody:  agentebody.DeletePesquisaBody(helper.GetPesquisaID(nrInsc, cpf), "", cpf),
+			requestBody:  agentebody.DeletePesquisaBody(uuid.New().String(), "", cpf),
 			expected:     http.StatusBadRequest,
 			expectedDesc: "Quantidade de Registros não processados: 1",
 		},
@@ -61,9 +62,9 @@ func TestDeletePesquisa(t *testing.T) {
 			expectedDesc: "Corpo da requisição não contém \\\"Pesquisas\\\"",
 		},
 		{
-			description:  "Deletar Pesquisas com sucesso",
+			description:  "Deletar Pesquisas sem autenticação",
 			setupHeaders: map[string]string{},
-			requestBody:  agentebody.DeletePesquisaBody(helper.GetPesquisaID(nrInsc, cpf), nrInsc, cpf),
+			requestBody:  agentebody.DeletePesquisaBody(uuid.New().String(), nrInsc, cpf),
 			expected:     http.StatusUnauthorized,
 			expectedDesc: "Unauthorized",
 		},
