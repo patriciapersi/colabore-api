@@ -57,7 +57,7 @@ func TestDeleteMensagens(t *testing.T) {
 		{
 			description:  "Excluir Mensagem Com header vazio",
 			setupHeaders: map[string]string{},
-			requestBody:  agentebody.DeleteAppMessageRequestBody(helper.GetMessageID(nrInsc, cpf), nrInsc, cpf),
+			requestBody:  agentebody.DeleteAppMessageRequestBody(uuid.New().String(), nrInsc, cpf),
 			expected:     http.StatusUnauthorized,
 			expectedDesc: "Unauthorized",
 		},

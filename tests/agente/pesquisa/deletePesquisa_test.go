@@ -55,14 +55,14 @@ func TestDeletePesquisa(t *testing.T) {
 			expectedDesc: "Quantidade de Registros não processados: 1",
 		},
 		{
-			description:  "Tentar Deletar Pesquisas com header vazio",
+			description:  "Tentar Deletar Pesquisas com Sem body",
 			setupHeaders: config.SetupHeadersAgente(),
 			requestBody:  structs.DeletePesquisa{},
 			expected:     http.StatusBadRequest,
 			expectedDesc: "Corpo da requisição não contém \\\"Pesquisas\\\"",
 		},
 		{
-			description:  "Deletar Pesquisas sem autenticação",
+			description:  "Deletar Pesquisas sem header de autenticação",
 			setupHeaders: map[string]string{},
 			requestBody:  agentebody.DeletePesquisaBody(uuid.New().String(), nrInsc, cpf),
 			expected:     http.StatusUnauthorized,
