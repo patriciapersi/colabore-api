@@ -5,51 +5,47 @@ import (
 	"testing"
 
 	"github.com/patriciapersi/colabore-api/config"
+	agentebody "github.com/patriciapersi/colabore-api/config/agenteBody"
+	"github.com/patriciapersi/colabore-api/config/structs"
 	"github.com/stretchr/testify/assert"
 
 	testutil "github.com/patriciapersi/colabore-api/util"
 )
 
 func TestPostCandidato(t *testing.T) {
-	var cpf = testutil.GenerateCPF()
+	var tax_id = testutil.GenerateCPF()
 	testCases := []struct {
 		description  string
-		header       map[string]string
-		setupBody    bool
+		setupHeaders map[string]string
+		requestBody  structs.Candidato
 		expected     int
 		expectedDesc string
-		nrInsc       string
-		cpf          string
 	}{
 		{
-			description:  "Enviar um novo candidato com sucesso",
-			header:       config.SetupHeadersAgente(),
-			setupBody:    true,
+			description:  "Tentar Reenviar um candidato com com sucesso",
+			setupHeaders: config.SetupHeadersAgente(),
+			requestBody:  agentebody.PostCandidato(nrInsc, tax_id),
 			expected:     http.StatusOK,
 			expectedDesc: "Sucesso",
-			nrInsc:       "10821992",
-			cpf:          cpf,
 		},
 		{
 			description:  "Validar um candidato ja enviado",
-			header:       config.SetupHeadersAgente(),
-			setupBody:    true,
+			setupHeaders: config.SetupHeadersAgente(),
+			requestBody:  agentebody.PostCandidato(nrInsc, tax_id),
 			expected:     http.StatusBadRequest,
 			expectedDesc: "Candidato já foi enviado anteriormente",
-			nrInsc:       "10821992",
-			cpf:          cpf,
 		},
 		{
 			description:  "Tentativa de incluir novo candidato sem body",
-			header:       config.SetupHeadersAgente(),
-			setupBody:    false,
+			setupHeaders: config.SetupHeadersAgente(),
+			requestBody:  structs.Candidato{},
 			expected:     http.StatusBadRequest,
-			expectedDesc: "Corpo da requisição não contém candidato",
+			expectedDesc: "ERRO",
 		},
 		{
 			description:  "Tentativa de Envio de novo candidato sem header - Unauthorized",
-			header:       map[string]string{},
-			setupBody:    false,
+			setupHeaders: map[string]string{},
+			requestBody:  structs.Candidato{},
 			expected:     http.StatusUnauthorized,
 			expectedDesc: "Unauthorized",
 		},
@@ -60,15 +56,9 @@ func TestPostCandidato(t *testing.T) {
 
 			api := config.SetupApi()
 
-			// Configura os parâmetros do corpo da requisição se necessário
-			var body interface{}
-			if tc.setupBody {
-				body = config.PostCandidatoBody(tc.cpf, tc.nrInsc)
-			}
-
 			resp, err := api.Client.R().
-				SetHeaders(tc.header).
-				SetBody(body).
+				SetHeaders(tc.setupHeaders).
+				SetBody(tc.requestBody).
 				Post(api.EndpointsAgente["Candidato"])
 
 			assert.NoError(t, err, "Erro ao fazer a requisição para %s", tc.description)

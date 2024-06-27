@@ -5,36 +5,42 @@ import (
 	"testing"
 
 	"github.com/patriciapersi/colabore-api/config"
+	agentebody "github.com/patriciapersi/colabore-api/config/agenteBody"
+	"github.com/patriciapersi/colabore-api/config/structs"
 	"github.com/stretchr/testify/assert"
+)
+
+const (
+	nrInsc = "10821992"
 )
 
 func TestPostDispositivos(t *testing.T) {
 
 	testCases := []struct {
 		description  string
-		setupBody    bool
-		header       map[string]string
+		setupHeaders map[string]string
+		requestBody  structs.Dispositivos
 		expected     int
 		expectedDesc string
 	}{
 		{
 			description:  "Inserir Dispositivo com Sucesso",
-			setupBody:    true,
-			header:       config.SetupHeadersAgente(),
+			setupHeaders: config.SetupHeadersAgente(),
+			requestBody:  agentebody.Dispositivo(nrInsc),
 			expected:     http.StatusOK,
 			expectedDesc: "Sucesso",
 		},
 		{
 			description:  "Tentar inserir dispositivo sem Body",
-			setupBody:    false,
-			header:       config.SetupHeadersAgente(),
+			setupHeaders: config.SetupHeadersAgente(),
+			requestBody:  structs.Dispositivos{},
 			expected:     http.StatusBadRequest,
-			expectedDesc: "Corpo da requisição não contém dados",
+			expectedDesc: "Cnpj,DispositivoId,Status",
 		},
 		{
 			description:  "Tentar inserir dispositivo sem header",
-			setupBody:    true,
-			header:       map[string]string{},
+			setupHeaders: map[string]string{},
+			requestBody:  structs.Dispositivos{},
 			expected:     http.StatusUnauthorized,
 			expectedDesc: "Unauthorized",
 		},
@@ -45,16 +51,9 @@ func TestPostDispositivos(t *testing.T) {
 		t.Run(tc.description, func(t *testing.T) {
 			api := config.SetupApi()
 
-			// Configura os parâmetros do corpo da requisição se necessário
-			var body interface{}
-			if tc.setupBody {
-				body = config.PostDispositivosRequestBody()
-
-			}
-
 			resp, err := api.Client.R().
-				SetHeaders(tc.header).
-				SetBody(body).
+				SetHeaders(tc.setupHeaders).
+				SetBody(tc.requestBody).
 				Post(api.EndpointsAgente["DispositivosStatus"])
 
 			assert.NoError(t, err, "Erro ao fazer a requisição")

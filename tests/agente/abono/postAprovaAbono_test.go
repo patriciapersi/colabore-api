@@ -53,6 +53,9 @@ func TestPostAprovaAbono(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.description, func(t *testing.T) {
+			if tc.before != nil {
+				tc.before()
+			}
 			api := config.SetupApi()
 
 			resp, err := api.Client.R().

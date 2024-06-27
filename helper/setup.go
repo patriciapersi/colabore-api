@@ -48,9 +48,9 @@ func DeleteDataAfterTest(id, nrInsc, cpf string) {
 
 // PRE CONDITION PARA ABONOS
 func CreateAbono(nrInsc, taxID, matricula string, statusSol structs.StatusSolicitacao) {
-	api := config.SetupApi()
+	api, headers := setupAPIAndHeaders()
 	api.Client.R().
-		SetHeaders(config.SetupHeadersAgente()).
+		SetHeaders(headers).
 		SetBody(agentebody.PostSolicitacaoAbono(nrInsc, taxID, matricula, statusSol)).
 		Post(api.EndpointsAgente["Abono"])
 
@@ -60,11 +60,11 @@ func CreateAbono(nrInsc, taxID, matricula string, statusSol structs.StatusSolici
 
 // PRE CONDITION PARA PESQUISA
 func GetPesquisaID(nrInsc, cpf string) string {
-	api := config.SetupApi()
+	api, headers := setupAPIAndHeaders()
 	requestBody := agentebody.PostPesquisaRequestBody(nrInsc, cpf)
 	id := requestBody.ID
 	resp, _ := api.Client.R().
-		SetHeaders(config.SetupHeadersAgente()).
+		SetHeaders(headers).
 		SetBody(requestBody).
 		Post(api.EndpointsAgente["Pesquisa"])
 
@@ -77,9 +77,21 @@ func GetPesquisaID(nrInsc, cpf string) string {
 }
 
 func DeletePesquisaAfterTest(id, nrInsc, cpf string) {
-	api := config.SetupApi()
+	api, headers := setupAPIAndHeaders()
 	api.Client.R().
-		SetHeaders(config.SetupHeadersAgente()).
+		SetHeaders(headers).
 		SetBody(agentebody.DeletePesquisaBody(id, nrInsc, cpf)).
 		Delete(api.EndpointsAgente["Pesquisa"])
+}
+
+//----------------------------------------------------------
+
+// PRE CONDITION PARA CANDIDATO
+func CreateCandidato(tax_id string, cnpj string) {
+	api, headers := setupAPIAndHeaders()
+	api.Client.R().
+		SetHeaders(headers).
+		SetBody(agentebody.PostCandidato(cnpj, tax_id)).
+		Post(api.EndpointsAgente["Candidato"])
+
 }
