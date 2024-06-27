@@ -21,6 +21,7 @@ func TestPostAprovaAbono(t *testing.T) {
 
 	testCases := []struct {
 		description  string
+		before       func()
 		setupHeaders map[string]string
 		requestBody  structs.PostAbonoBody
 		expected     int
@@ -28,6 +29,7 @@ func TestPostAprovaAbono(t *testing.T) {
 	}{
 		{
 			description:  "Aprova Solicitação de Abono com Sucesso",
+			before:       func() { helper.CreateAbono(nrInscr, tax_id, matric, structs.PENDENTE) },
 			setupHeaders: config.SetupHeadersAgente(),
 			requestBody:  agentebody.PostSolicitacaoAbono(nrInscr, tax_id, matric, structs.ACEITO),
 			expected:     http.StatusOK,
@@ -51,10 +53,6 @@ func TestPostAprovaAbono(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.description, func(t *testing.T) {
-
-			if tc.setupHeaders != nil && len(tc.requestBody.Abonos) > 0 {
-				helper.CreateAbono(nrInscr, tax_id, matric, structs.PENDENTE)
-			}
 			api := config.SetupApi()
 
 			resp, err := api.Client.R().

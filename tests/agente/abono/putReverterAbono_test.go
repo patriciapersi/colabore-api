@@ -21,6 +21,7 @@ func TestPutReveterAbonoo(t *testing.T) {
 
 	testCases := []struct {
 		description  string
+		before       func()
 		setupHeaders map[string]string
 		requestBody  structs.PutAbonoBody
 		expected     int
@@ -28,6 +29,7 @@ func TestPutReveterAbonoo(t *testing.T) {
 	}{
 		{
 			description:  "Reverter o status de um Abono para pendente",
+			before:       func() { helper.CreateAbono(nrInscr, tax_id, matric, structs.PENDENTE) },
 			setupHeaders: config.SetupHeadersAgente(),
 			requestBody:  agentebody.PutReverterSolicitacaoAbono(cnpj, taxID, matID),
 			expected:     http.StatusOK,
