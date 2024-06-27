@@ -17,7 +17,7 @@ func setupAPIAndHeaders() (*config.API, map[string]string) {
 }
 
 // ---------------------------------------------------
-// PRE CONDITION MENSAGEm
+// PRE CONDITION MENSAGEM
 func GetMessageID(nrInsc, cpf string) string {
 	api, headers := setupAPIAndHeaders()
 	requestBody := agentebody.PostMessageRequestBody(nrInsc, cpf)
