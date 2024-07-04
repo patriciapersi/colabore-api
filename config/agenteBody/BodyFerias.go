@@ -11,8 +11,8 @@ func InformacoesFerias(cpf, nrInsc, matricula string) structs.ColaboradorRequest
 		Colaboradores: []structs.ColaboradoresInfo{
 			{
 				CPF:                            cpf,
-				NrInscEmpregador:               "10821992",
-				Matricula:                      "000031",
+				NrInscEmpregador:               nrInsc,
+				Matricula:                      matricula,
 				SolicitouAdiantamento13:        false,
 				DiasDisponiveisAbonoPecuniario: 10,
 				DiasDisponiveis:                30,
