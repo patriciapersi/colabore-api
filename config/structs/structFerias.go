@@ -11,6 +11,10 @@ type ColaboradoresInfo struct {
 	FimPeriodoConcessivo           string `json:"FimPeriodoConcessivo"`
 }
 
+type ColaboradorRequestBody struct {
+	Colaboradores []ColaboradoresInfo `json:"Colaboradores"`
+}
+
 type FeriasInfo struct {
 	CPF                      string `json:"CPF"`
 	NrInscEmpregador         string `json:"NrInscEmpregador"`

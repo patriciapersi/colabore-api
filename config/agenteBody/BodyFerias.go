@@ -6,16 +6,20 @@ import (
 	"github.com/patriciapersi/colabore-api/config/structs"
 )
 
-func InformacoesFerias(cpf, nrInsc, matricula string) structs.ColaboradoresInfo {
-	return structs.ColaboradoresInfo{
-		CPF:                            cpf,
-		NrInscEmpregador:               nrInsc,
-		Matricula:                      matricula,
-		SolicitouAdiantamento13:        false,
-		DiasDisponiveisAbonoPecuniario: 10,
-		DiasDisponiveis:                30,
-		InicioPeriodoConcessivo:        "2022-06-29",
-		FimPeriodoConcessivo:           "2023-07-30",
+func InformacoesFerias(cpf, nrInsc, matricula string) structs.ColaboradorRequestBody {
+	return structs.ColaboradorRequestBody{
+		Colaboradores: []structs.ColaboradoresInfo{
+			{
+				CPF:                            cpf,
+				NrInscEmpregador:               "10821992",
+				Matricula:                      "000031",
+				SolicitouAdiantamento13:        false,
+				DiasDisponiveisAbonoPecuniario: 10,
+				DiasDisponiveis:                30,
+				InicioPeriodoConcessivo:        "2022-06-29",
+				FimPeriodoConcessivo:           "2023-07-30",
+			},
+		},
 	}
 }
 
