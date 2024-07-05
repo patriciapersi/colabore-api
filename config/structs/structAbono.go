@@ -26,7 +26,7 @@ type PostAbonoBody struct {
 	Abonos []Abono `json:"Abonos"`
 }
 
-type AbonoReverter struct {
+type AbonoReverteDelete struct {
 	NrInscEmpregador string   `json:"NrInscEmpregador"`
 	Evento           string   `json:"Evento"`
 	CPF              string   `json:"CPF"`
@@ -36,6 +36,6 @@ type AbonoReverter struct {
 	Turnos           []string `json:"Turnos"`
 }
 
-type PutAbonoBody struct {
-	Abonos []AbonoReverter `json:"Abonos"`
+type AbonoBody struct {
+	Abonos []AbonoReverteDelete `json:"Abonos"`
 }

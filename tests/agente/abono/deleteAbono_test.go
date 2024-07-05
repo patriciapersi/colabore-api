@@ -11,13 +11,13 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// const (
-// 	cnpj  = "10821992"
-// 	taxID = "60515860409"
-// 	matID = "000031"
-// ) Esses dados já estão sendo usados do teste de DeleteAbono_test.go
+const (
+	cnpj  = "10821992"
+	taxID = "60515860409"
+	matID = "000031"
+)
 
-func TestPutReveterAbono(t *testing.T) {
+func TestDeleteAbono(t *testing.T) {
 
 	testCases := []struct {
 		description  string
@@ -28,7 +28,7 @@ func TestPutReveterAbono(t *testing.T) {
 		expectedDesc string
 	}{
 		{
-			description:  "Reverter o status de um Abono para pendente",
+			description:  "Deletar Abono pendente",
 			before:       func() { helper.CreateAbono(nrInscr, tax_id, matric, structs.PENDENTE) },
 			setupHeaders: config.SetupHeadersAgente(),
 			requestBody:  agentebody.Abono(cnpj, taxID, matID),
@@ -36,14 +36,14 @@ func TestPutReveterAbono(t *testing.T) {
 			expectedDesc: "Sucesso",
 		},
 		{
-			description:  "Tentativa de reverter um abono sem body",
+			description:  "Tentativa de deletar um abono sem body",
 			setupHeaders: config.SetupHeadersAgente(),
 			requestBody:  structs.AbonoBody{},
 			expected:     http.StatusBadRequest,
-			expectedDesc: "Chave \\\"Abonos\\\" não encontrada.",
+			expectedDesc: "Corpo da requisição não contém nenhum abono",
 		},
 		{
-			description:  "Tentativa de reverter um abono sem header - Unauthorized",
+			description:  "Tentativa de deletar um abono sem header - Unauthorized",
 			setupHeaders: map[string]string{},
 			requestBody:  structs.AbonoBody{},
 			expected:     http.StatusUnauthorized,
@@ -63,7 +63,7 @@ func TestPutReveterAbono(t *testing.T) {
 			resp, err := api.Client.R().
 				SetHeaders(tc.setupHeaders).
 				SetBody(tc.requestBody).
-				Put(api.EndpointsAgente["ReverterAbono"])
+				Delete(api.EndpointsAgente["Abono"])
 
 			assert.NoError(t, err, "Erro ao fazer a requisição para %s", tc.description)
 			assert.Equal(t, tc.expected, resp.StatusCode(), "Status de resposta inesperado para %s", tc.description)

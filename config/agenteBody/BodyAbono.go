@@ -24,9 +24,9 @@ func PostSolicitacaoAbono(nrInsc, taxID, matricula string, statusSol structs.Sta
 	}
 }
 
-func PutReverterSolicitacaoAbono(nrInsc, taxID, matricula string) structs.PutAbonoBody {
-	return structs.PutAbonoBody{
-		Abonos: []structs.AbonoReverter{
+func Abono(nrInsc, taxID, matricula string) structs.AbonoBody {
+	return structs.AbonoBody{
+		Abonos: []structs.AbonoReverteDelete{
 			{
 				NrInscEmpregador: nrInsc,
 				Evento:           "3",
