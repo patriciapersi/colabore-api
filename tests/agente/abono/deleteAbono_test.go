@@ -54,8 +54,8 @@ func TestDeleteAbono(t *testing.T) {
 	for _, tc := range testCases {
 		t.Run(tc.description, func(t *testing.T) {
 
-			if tc.setupHeaders != nil && len(tc.requestBody.Abonos) > 0 {
-				helper.CreateAbono(cnpj, taxID, matID, structs.PENDENTE)
+			if tc.before != nil {
+				tc.before()
 			}
 
 			api := config.SetupApi()
