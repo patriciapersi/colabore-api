@@ -14,7 +14,7 @@ import (
 const (
 	nrInscr = "10821992"
 	tax_id  = "60515860409"
-	matric  = "000034"
+	matric  = "000031"
 )
 
 func TestPostAprovaAbono(t *testing.T) {

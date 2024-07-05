@@ -13,7 +13,7 @@ import (
 const (
 	nrInsc    = "10821992"
 	cpf       = "60515860409"
-	matricula = "000034"
+	matricula = "000031"
 )
 
 func TestPostSolicitaAbono(t *testing.T) {
